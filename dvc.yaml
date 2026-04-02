@@ -1,0 +1,25 @@
+stages:
+
+  data:
+    cmd: python src/data/make_dataset.py
+    outs:
+      - C:\Users\vish8\OneDrive\Documentos\GitHub\Ia-Systems\F1-AI-Assistent\data\raw\data.csv
+
+  features:
+    cmd: python src/features/build_features.py
+    deps:
+      - C:\Users\vish8\OneDrive\Documentos\GitHub\Ia-Systems\F1-AI-Assistent\data\raw\data.csv
+    outs:
+      - C:\Users\vish8\OneDrive\Documentos\GitHub\Ia-Systems\F1-AI-Assistent\data\processed\features.csv
+
+  train:
+    cmd: python src/models/train.py
+    deps:
+      - C:\Users\vish8\OneDrive\Documentos\GitHub\Ia-Systems\F1-AI-Assistent\data\processed\features.csv
+    outs:
+      - C:\Users\vish8\OneDrive\Documentos\GitHub\Ia-Systems\F1-AI-Assistent\src\models\modelos\model.pkl
+
+  simulate:
+    cmd: python src/simulation/simulate.py
+    deps:
+      - C:\Users\vish8\OneDrive\Documentos\GitHub\Ia-Systems\F1-AI-Assistent\src\models\modelos\model.pkl
