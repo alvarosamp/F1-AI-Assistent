@@ -1,0 +1,17 @@
+TyreLife
+CompoundEncoded
+Position
+TrackStatus
+AirTemp
+TrackTemp
+Humidity
+Pressure
+Rainfall
+WindSpeed
+lap_time_mean_3
+lap_time_delta
+tyre_ratio
+stint_progress
+is_raining
+session_code_encoded
+team_encoded
