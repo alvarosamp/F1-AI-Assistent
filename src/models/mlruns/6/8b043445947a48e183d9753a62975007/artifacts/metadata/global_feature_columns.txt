@@ -1,0 +1,14 @@
+TyreLife
+CompoundEncoded
+Position
+TrackStatus
+AirTemp
+TrackTemp
+Humidity
+Pressure
+Rainfall
+WindSpeed
+is_raining
+session_code_encoded
+team_encoded
+tyre_ratio
