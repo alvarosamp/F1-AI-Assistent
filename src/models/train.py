@@ -111,6 +111,7 @@ def prepare_dataframe(df: pd.DataFrame) -> pd.DataFrame:
 
 def get_feature_list(df: pd.DataFrame) -> list[str]:
     candidate_features = [
+        # Conhecidas no início da volta (sem leakage por construção)
         "TyreLife",
         "CompoundEncoded",
         "Position",
@@ -121,32 +122,42 @@ def get_feature_list(df: pd.DataFrame) -> list[str]:
         "Pressure",
         "Rainfall",
         "WindSpeed",
-        "speed_mean",
-        "speed_max",
-        "speed_std",
-        "throttle_mean",
-        "throttle_std",
-        "brake_ratio",
-        "rpm_mean",
-        "gear_mean",
-        "drs_ratio",
-        "lap_time_mean_3",
-        "lap_time_delta",
-        "speed_delta",
-        "throttle_delta",
-        "brake_delta",
-        "degradation_score",
-        "aggression_score",
-        "consistency_score",
-        "efficiency_score",
-        "drs_usage_intensity",
-        "tyre_ratio",
-        "stint_progress",
         "is_raining",
         "session_code_encoded",
         "team_encoded",
-    ]
+        "tyre_ratio",
+        "stint_progress",
 
+        # Histórico de lap time (todas shiftadas)
+        "lap_time_prev",
+        "lap_time_mean_3_prev",
+        "lap_time_delta_prev",
+        "lap_time_std_5_prev",
+
+        # Telemetria da volta anterior
+        "speed_mean_prev",
+        "speed_max_prev",
+        "speed_std_prev",
+        "throttle_mean_prev",
+        "throttle_std_prev",
+        "brake_ratio_prev",
+        "rpm_mean_prev",
+        "gear_mean_prev",
+        "drs_ratio_prev",
+
+        # Deltas da telemetria (N-1 vs N-2)
+        "speed_mean_delta_prev",
+        "speed_max_delta_prev",
+        "throttle_mean_delta_prev",
+        "brake_ratio_delta_prev",
+
+        # Scores derivados (todos baseados em _prev)
+        "degradation_score_prev",
+        "aggression_score_prev",
+        "efficiency_score_prev",
+        "drs_usage_intensity_prev",
+        "consistency_score_prev",
+    ]
     return [c for c in candidate_features if c in df.columns]
 
 

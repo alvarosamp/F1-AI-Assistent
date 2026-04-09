@@ -1,0 +1,15 @@
+feature,importance
+is_raining,0.25401047
+TrackStatus,0.22127183
+Rainfall,0.20982142
+session_code_encoded,0.07769703
+Pressure,0.05540562
+TyreLife,0.030110616
+AirTemp,0.024670871
+TrackTemp,0.024034297
+CompoundEncoded,0.023587037
+WindSpeed,0.021806372
+Humidity,0.021335555
+Position,0.017838411
+tyre_ratio,0.015259359
+team_encoded,0.0031510869
