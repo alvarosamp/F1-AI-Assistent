@@ -22,6 +22,7 @@ Por que target encoding em vez de label encoding ?
 
 from __future__ import annotations
 
+import sys
 from pathlib import Path
 import json
 import joblib
@@ -36,10 +37,16 @@ from xgboost import XGBRegressor
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATA_FILE = PROJECT_ROOT / "data" / "processed" / "C:\\Users\\vish8\\OneDrive\\Documentos\\GitHub\\Ia-Systems\\F1-AI-Assistent\\data\\processed\\telemetry_features_race.csv"
+DATA_FILE = PROJECT_ROOT / "data" / "processed" / "telemetry_features_race.csv"
 MODELS_DIR = PROJECT_ROOT / "models"
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
-from src.features.target_encoding import TargetEncoderCV
+
+# Permite executar via: `python .\src\models\train_global_optuna.py`
+SRC_DIR = Path(__file__).resolve().parents[1]
+if str(SRC_DIR) not in sys.path:
+    sys.path.insert(0, str(SRC_DIR))
+
+from features.target_encoding import TargetEncoderCV
 
 TARGET_COL = "LapTimeResidual"
 CATEGORICAL_COLS = ["Driver", "Team", "gp"]
@@ -135,7 +142,7 @@ def build_features_for_fold(
     X_tr_num = df.iloc[train_idx][numeric_features].reset_index(drop=True)
     X_te_num = df.iloc[test_idx][numeric_features].reset_index(drop=True)
     encoder = TargetEncoderCV(cols=CATEGORICAL_COLS, smoothing = 20.0)
-    encoder.fit(df.iloc[train_idx], TARGET_COL)
+    encoder.fit(df.iloc[train_idx], target=TARGET_COL)
     tr_te = encoder.transform(df.iloc[train_idx]).reset_index(drop=True)
     te_te = encoder.transform(df.iloc[test_idx]).reset_index(drop=True)
     X_tr = pd.concat([X_tr_num, tr_te], axis=1)
@@ -153,8 +160,10 @@ def evaluate_groupkfold(
     gfk = GroupKFold(n_splits=n_splits)
     fold_results = []
 
+    std_y = float(y.std())
+
     for fold, (train_idx, test_idx) in enumerate(gfk.split(df, y, groups = groups), start = 1):
-        X_tr, X_te, _ = build_features_for_fold(df, tr_idx, te_idx, numeric_features)
+        X_tr, X_te, _ = build_features_for_fold(df, train_idx, test_idx, numeric_features)
         y_tr = y.iloc[train_idx].reset_index(drop=True)
         y_te = y.iloc[test_idx].reset_index(drop=True)
 
@@ -169,25 +178,29 @@ def evaluate_groupkfold(
         model.fit(X_tr, y_tr)
         preds = model.predict(X_te)
 
-        rmse = float(mean_squared_error(y_te, preds, squared=False))
+        rmse = float(np.sqrt(mean_squared_error(y_te, preds)))
         mae = float(mean_absolute_error(y_te, preds))
         r2 = float(r2_score(y_te, preds))
-        fold_results.append({"fold": fold, "rmse": rmse, "mae": mae, "r2": r2})
         test_gps = sorted(df.iloc[test_idx]["gp"].unique().tolist())
-        fold_results.append({
-            "fold" : fold_idx,
-            "test_gps" : ",".join(test_gps),
-            "rmse" : rmse,
-            "mae" : mae,
-            "r2" : r2
-            "train_rows" : len(train_idx),
-            "test_rows" : len(test_idx)
-        })
-        results_df = pd.DataFrame(fold_results)
-        std_y = float(y.std())
-        rmse_mean = float(results_df["rmse"].mean())
 
-        return {
+        fold_results.append({
+            "fold": fold,
+            "test_gps": ",".join(test_gps),
+            "rmse": rmse,
+            "mae": mae,
+            "r2": r2,
+            "train_rows": int(len(train_idx)),
+            "test_rows": int(len(test_idx)),
+        })
+
+    results_df = pd.DataFrame(fold_results)
+    rmse_mean = float(results_df["rmse"].mean())
+
+    improvement_over_trivial = 0.0
+    if std_y > 0:
+        improvement_over_trivial = 1.0 - rmse_mean / std_y
+
+    return {
         "fold_results": results_df,
         "rmse_mean": rmse_mean,
         "rmse_std": float(results_df["rmse"].std(ddof=0)),
@@ -196,7 +209,7 @@ def evaluate_groupkfold(
         "r2_mean": float(results_df["r2"].mean()),
         "r2_std": float(results_df["r2"].std(ddof=0)),
         "baseline_trivial_rmse": std_y,
-        "improvement_over_trivial": 1.0 - rmse_mean / std_y,
+        "improvement_over_trivial": float(improvement_over_trivial),
     }
 
 def main() -> None :
@@ -252,7 +265,7 @@ def main() -> None :
     X_cat = final_encoder.transform(df).reset_index(drop=True)
     X_full = pd.concat([X_num, X_cat], axis=1)
     y_full = df[TARGET_COL].reset_index(drop=True)
- 
+
     final_model = XGBRegressor(
         objective="reg:squarederror",
         random_state=42,
@@ -262,3 +275,67 @@ def main() -> None :
     )
     final_model.fit(X_full, y_full)
     
+    with mlflow.start_run(run_name = 'global_v2_xgb_te_groupkfold'):
+        mlflow.log_param('target', TARGET_COL)
+        mlflow.log_param('validation_strategy', f'GroupKFold(n_splits={N_SPLITS})')
+        mlflow.log_param('categorical_encoding', 'target_encoding_cv_safe_smoothing20')
+        mlflow.log_param('group_col', 'gp')
+        mlflow.log_param('n_features_numeric', len(numeric_features))
+        mlflow.log_param('n_features_categorical', len(CATEGORICAL_COLS))
+        mlflow.log_param('n_rows', len(df))
+        mlflow.log_param('n_trials', N_TRIALS)
+        
+        for k, v in best_params.items():
+            mlflow.log_param(k, v)
+            
+        mlflow.log_metric('rmse_mean', best_metrics['rmse_mean'])
+        mlflow.log_metric('rmse_std', best_metrics['rmse_std'])
+        mlflow.log_metric('mae_mean', best_metrics['mae_mean'])
+        mlflow.log_metric('mae_std', best_metrics['mae_std'])
+        mlflow.log_metric('r2_mean', best_metrics['r2_mean'])
+        mlflow.log_metric('r2_std', best_metrics['r2_std'])
+        mlflow.log_metric('baseline_trivial_rmse', best_metrics['baseline_trivial_rmse'])
+        mlflow.log_metric('improvement_over_trivial', best_metrics['improvement_over_trivial'])
+        
+        #Artefatos
+        model_path = MODELS_DIR / "global_model_v2.pkl"
+        joblib.dump(final_model, model_path)
+        mlflow.log_artifact(model_path, artifact_path="models")
+        encoder_path = MODELS_DIR / "global_target_encoder_v2.pkl"
+        joblib.dump(final_encoder, encoder_path)
+        mlflow.log_artifact(encoder_path, artifact_path="encoders")
+        mlflow.log_artifact(str(encoder_path), artifact_path="models")
+ 
+        feature_file = MODELS_DIR / "global_feature_columns_v2.json"
+        with open(feature_file, "w", encoding="utf-8") as f:
+            json.dump({
+                "numeric_features": numeric_features,
+                "categorical_features": CATEGORICAL_COLS,
+                "encoded_feature_names": final_encoder.feature_names,
+                "all_features_in_order": list(X_full.columns),
+            }, f, indent=2)
+        mlflow.log_artifact(str(feature_file), artifact_path="metadata")
+ 
+        importance_df = pd.DataFrame({
+            "feature": list(X_full.columns),
+            "importance": final_model.feature_importances_,
+        }).sort_values("importance", ascending=False)
+        importance_file = MODELS_DIR / "global_feature_importance_v2.csv"
+        importance_df.to_csv(importance_file, index=False)
+        mlflow.log_artifact(str(importance_file), artifact_path="metadata")
+ 
+        fold_results_file = MODELS_DIR / "global_fold_results_v2.csv"
+        fold_results.to_csv(fold_results_file, index=False)
+        mlflow.log_artifact(str(fold_results_file), artifact_path="cv_results")
+ 
+        best_params_file = MODELS_DIR / "global_best_params_v2.json"
+        with open(best_params_file, "w", encoding="utf-8") as f:
+            json.dump(best_params, f, indent=2)
+        mlflow.log_artifact(str(best_params_file), artifact_path="optuna")
+ 
+    print(f"\n[OK] Modelo salvo em {MODELS_DIR / 'global_model_v2.pkl'}")
+    print(f"[OK] Encoder salvo em {MODELS_DIR / 'global_target_encoder_v2.pkl'}")
+ 
+ 
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,6 @@
+fold,test_gps,rmse,mae,r2,train_rows,test_rows
+1,"Japanese Grand Prix,Las Vegas Grand Prix,Singapore Grand Prix,Spanish Grand Prix,United States Grand Prix",0.7697592979465627,0.583130029039034,0.6060524732957245,15868,4451
+2,"Austrian Grand Prix,Italian Grand Prix,Monaco Grand Prix,Qatar Grand Prix",0.9651762867657994,0.7288185020194029,0.2820248470161846,16528,3791
+3,"Australian Grand Prix,Bahrain Grand Prix,Belgian Grand Prix,Hungarian Grand Prix,São Paulo Grand Prix",0.8043625101775229,0.6067765748278241,0.5367838471732453,15866,4453
+4,"Azerbaijan Grand Prix,Canadian Grand Prix,Dutch Grand Prix,Miami Grand Prix",0.6639158497971129,0.5019105224207702,0.632727998903579,16527,3792
+5,"Abu Dhabi Grand Prix,British Grand Prix,Mexico City Grand Prix,Saudi Arabian Grand Prix",0.6055027936399472,0.45556410656420265,0.6912412171330219,16487,3832
