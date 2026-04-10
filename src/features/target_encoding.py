@@ -26,7 +26,7 @@ import pandas as pd
 def compute_target_encoding(
         train_df : pd.DataFrame,
         target_col : str,
-        cotegory_col : str,
+    category_col : str,
         smoothing: float = 20.0,
 ) -> tuple[dict,float]:
     """
@@ -45,7 +45,6 @@ def compute_target_encoding(
     global_mean = train_df[target_col].mean()
 
     # Estatísticas por categoria
-    stats = train_df.groupby(category_col)[target_col].agg(['mean', 'count'])
     stats = train_df.groupby(category_col)[target_col].agg(['mean', 'count'])
     smoothed = (
         stats['count'] * stats['mean'] + smoothing * global_mean
@@ -95,7 +94,23 @@ class TargetEncoderCV:
         self.encodings : dict[str, dict] = {}
         self.global_means : dict[str, float] = {}
 
-    def fit(self, train_df : pd.DataFrame, target_col : str) -> "TargetEncoderCV":
+    def fit(
+        self,
+        train_df: pd.DataFrame,
+        target_col: str | None = None,
+        *,
+        target: str | None = None,
+    ) -> "TargetEncoderCV":
+        if target_col is None:
+            target_col = target
+        elif target is not None and target != target_col:
+            raise TypeError(
+                "Provide either target_col positional OR target keyword, not both."
+            )
+
+        if target_col is None:
+            raise TypeError("Missing required target column name via target_col or target=")
+
         for col in self.cols:
             mapping, gm = compute_target_encoding(
                 train_df, target_col, col, self.smoothing
@@ -107,7 +122,7 @@ class TargetEncoderCV:
     def transform(self, df : pd.DataFrame) -> pd.DataFrame:
         out = pd.DataFrame(index=df.index)
         for col in self.cols:
-            out[col] = apply_target_encoding(
+            out[f"{col}_te"] = apply_target_encoding(
                 df, col, self.encodings[col], self.global_means[col]
             )
         return out

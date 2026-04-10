@@ -128,8 +128,8 @@ def add_race_context_features(df: pd.DataFrame) -> pd.DataFrame:
     race_len = df.groupby(GROUP_COLS)["LapNumber"].transform("max")
     df["LapNumber_pct"] = df["LapNumber"] / race_len
     #Integracoes : degradacao depende do composto e do progresso da corrida
-    df[tyre_x_progress] = df['TyreLife'] * df['LapNumber_pct']
-    df[compound_x_tyre] = df['CompoundEncoded'] * df['TyreLife']
+    df["tyre_x_progress"] = df["TyreLife"] * df["LapNumber_pct"]
+    df["compound_x_tyre"] = df["CompoundEncoded"] * df["TyreLife"]
     return df
 
 def build_target(df: pd.DataFrame) -> pd.DataFrame:
