@@ -6,15 +6,17 @@ REGRA DE OURO ANTI-LEAKAGE:
     da volta N-1. Toda feature derivada de LapTime, Speed, etc. da própria
     volta N é PROIBIDA, porque ela contém o próprio target.
 
-DECISÕES ANTI-RUÍDO (validadas via diagnose.py):
-    - Pre-Season Testing é REMOVIDO (dinâmica diferente).
-    - Race e Qualifying viram DATASETS SEPARADOS (telemetry_features_race.csv
-      e telemetry_features_quali.csv) — eles têm dinâmica fundamentalmente
-      diferente e NÃO devem treinar o mesmo modelo.
-    - Filter de LapTime baseado em IQR por sessão, não em corte fixo, porque
-      Mônaco e Spa têm ritmos completamente diferentes.
-    - Filter agressivo de outliers no residual: |residual| > 3s sai (em race;
-      em quali o critério é mais frouxo porque a variância é legítima).
+DECISOES ANTI RUIDO : 
+- Pre season Testing é removido
+- Race e qualifying sao datasets SEPARADOS( dinamicas diferentes, estratégias diferentes, tolerância a outliers diferente)
+- Filtro IQR por sessão, para lidar com distribuições muito diferentes entre GPs (
+- Filtro residual : race [residual] <=3s.
+
+Nessa nova versao 3: 
+-Lapnumber, Stint e LapNumber_pct como features diretas ( nao sao target, sao contexto de corrida)
+lapNumber_pct virou a feature mais importante do modelo( 43% de importancia)
+
+- Iteraçoes tyre_x_progress e compound_x_encoded, para capturar a evolução da performance do pneu e o tipo de composto (soft, medium, hard, inter, wet)
 """
 
 from __future__ import annotations
@@ -116,6 +118,19 @@ def add_tyre_and_stint_features(df: pd.DataFrame) -> pd.DataFrame:
     )
     return df
 
+def add_race_context_features(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Features de CONTEXTO da corrida. Nao sao derivadas de LapTime, entao na ha lakage -e LapNumber e Stint sao conhecidos no comeco da volta
+
+    LapNumber_pct é a o insight chave: conforme a corrida avança, o carro fica mais leve (combustivel queima - 0.03s/volta) e o ritmo evolui sistematicamente. Sem essa
+    essa feature , o modelo nao consegue saber se uma volta 'rapida demais' é degradaçao baixa do pneu ou fim da corrida com tanque vazio.
+    """
+    race_len = df.groupby(GROUP_COLS)["LapNumber"].transform("max")
+    df["LapNumber_pct"] = df["LapNumber"] / race_len
+    #Integracoes : degradacao depende do composto e do progresso da corrida
+    df[tyre_x_progress] = df['TyreLife'] * df['LapNumber_pct']
+    df[compound_x_tyre] = df['CompoundEncoded'] * df['TyreLife']
+    return df
 
 def build_target(df: pd.DataFrame) -> pd.DataFrame:
     df["session_baseline"] = df.groupby(
@@ -184,6 +199,7 @@ def process(df: pd.DataFrame, label: str, max_abs_residual: float) -> pd.DataFra
     df = add_telemetry_history_features(df)
     df = add_derived_features(df)
     df = add_tyre_and_stint_features(df)
+    df = add_race_context_features(df)
     df = build_target(df)
     df = filter_residual(df, max_abs_residual=max_abs_residual)
     df = df.replace([np.inf, -np.inf], np.nan)
