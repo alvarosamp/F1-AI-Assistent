@@ -17,18 +17,23 @@ import joblib
 import numpy as np
 import pandas as pd
 
+
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 MODELS_DIR = PROJECT_ROOT / "models"
-DATA_FILE = PROJECT_ROOT / "data" / "processed" / "telemetry_features_race.csv"
+DATA_FILE = PROJECT_ROOT / "data" / "processed" / "telemetry_features_race_v4.csv"
 
-# Permite carregar artefatos pickled que referenciam o módulo `features.*`
-SRC_DIR = Path(__file__).resolve().parents[1]
-if str(SRC_DIR) not in sys.path:
-    sys.path.insert(0, str(SRC_DIR))
- 
-MODEL_PATH = MODELS_DIR / "global_model_v2.pkl"
-ENCODER_PATH = MODELS_DIR / "global_target_encoder_v2.pkl"
-FEATURES_PATH = MODELS_DIR / "global_feature_columns_v2.json"
+# Permite carregar artefatos pickled que referenciam o módulo `target_encoding`
+SRC_DIR = Path(__file__).resolve().parents[1]  # .../src
+FEATURES_DIR = SRC_DIR / "features"
+for _path in (SRC_DIR, FEATURES_DIR):
+    if str(_path) not in sys.path:
+        sys.path.insert(0, str(_path))
+
+# Import explícito para garantir que joblib/pickle consiga resolver o módulo ao deserializar
+import target_encoding  # noqa: F401
+MODEL_PATH = MODELS_DIR / "global_model_v3.pkl"
+ENCODER_PATH = MODELS_DIR / "global_target_encoder_v3.pkl"
+FEATURES_PATH = MODELS_DIR / "global_feature_columns_v3.json"
 
 def main() -> None:
     if not MODEL_PATH.exists():

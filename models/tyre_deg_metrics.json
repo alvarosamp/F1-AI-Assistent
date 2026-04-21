@@ -1,0 +1,25 @@
+{
+  "coefficients_summary": {
+    "SOFT": {
+      "coef": -0.005606557063916097,
+      "r2": 0.001153482467757705,
+      "n": 7082
+    },
+    "MEDIUM": {
+      "coef": -0.03339903167440997,
+      "r2": 0.05912116628484276,
+      "n": 20852
+    },
+    "HARD": {
+      "coef": -0.03475486891048856,
+      "r2": 0.0854646826734049,
+      "n": 28494
+    },
+    "INTERMEDIATE": {
+      "coef": -0.1338866218478553,
+      "r2": 0.39884448009954077,
+      "n": 1893
+    }
+  },
+  "interpretation": "Negative coef means laptimes DECREASE (faster) as stint progresses, due to fuel burn dominating tyre wear."
+}
