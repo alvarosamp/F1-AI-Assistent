@@ -1,271 +1,259 @@
-# F1 AI Race Engineer
+# 🏎️ F1 AI Race Insights
 
-Sistema de simulação e estratégia de corridas de Fórmula 1 com foco em Machine Learning, telemetria, MLOps e arquitetura híbrida de modelos.
+**Sistema de decision support para corridas de Fórmula 1** — prevê probabilidades de vitória, pódio, top 6 e top 10 usando simulação Monte Carlo calibrada.
 
-## Visão geral
+Dado um grid de largada e um Grand Prix, o sistema simula a corrida **10.000 vezes em 12 segundos** e produz distribuições de probabilidade por piloto, validadas contra resultados reais.
 
-Este projeto evoluiu de um simulador simples por volta para uma plataforma de IA aplicada à Fórmula 1 com:
+![Python](https://img.shields.io/badge/python-3.10+-blue)
+![Status](https://img.shields.io/badge/status-v3.0_Sprint_3_complete-green)
 
-- coleta de dados reais com FastF1
-- extração de telemetria por volta
-- feature engineering avançado
-- modelo global para generalização entre pistas
-- modelos locais por pista para especialização
-- comparação global vs local
-- rastreamento de experimentos com MLflow
-- otimização de hiperparâmetros com Optuna
-- base para roteamento de inferência e simulação visual
+---
 
-## Objetivos
+## Resultados
 
-O sistema busca apoiar decisões como:
+### Calibração contra 2024 (24 corridas reais)
 
-- previsão de tempo de volta
-- análise de degradação de pneus
-- suporte a decisões de pit stop
-- comparação de comportamento entre pistas
-- futura explicação por LLM local
-- futura integração com simulação visual e estratégia
+| Mercado | Brier Score | vs Baseline (grid pos.) | ECE |
+|---------|------------|------------------------|-----|
+| **Vitória** | 0.036 | **+4.2% melhor** | 0.005 |
+| **Pódio** | 0.073 | **+20.0% melhor** | 0.023 |
+| **Top 6** | 0.064 | **+34.8% melhor** | 0.027 |
+| **Top 10** | 0.102 | **+12.4% melhor** | 0.018 |
+| **DNF** | 0.087 | **+1.4% melhor** | 0.012 |
 
-## Arquitetura do projeto
+O modelo **bate o baseline trivial em todos os 5 mercados**. ECE < 0.03 em todos — probabilidades bem calibradas.
 
-```text
-FastF1
-  ↓
-Coleta de dados brutos
-  ↓
-Extração de telemetria por volta
-  ↓
-Build features avançado
-  ↓
-Treino global
-  ↓
-Treino local por pista
-  ↓
-Comparação global vs local
-  ↓
-Router de inferência
-  ↓
-Simulação / explicação / visualização
+### Modelo de Lap Time (base do simulador)
+
+| Métrica | Valor |
+|---------|-------|
+| RMSE (walk-forward 2022+23 → 2024) | **0.722s** |
+| R² | **0.638** |
+| MAE | **0.537s** |
+| Ganho sobre baseline trivial | **39.9%** |
+
+### Exemplo de saída (Australian GP, grid real)
+
+```
+Driver     Win   Podium    Top6   Top10    DNF
+---------------------------------------------
+  VER   40.9%    78.0%   92.1%   93.5%   6.5%
+  LEC   19.6%    55.1%   87.7%   93.6%   6.4%
+  SAI   17.8%    56.4%   87.5%   93.4%   6.6%
+  NOR   11.3%    42.9%   83.2%   93.2%   6.8%
+  PIA    5.2%    29.0%   76.5%   92.9%   7.1%
+  RUS    3.4%    22.7%   74.1%   92.3%   7.7%
+  HAM    1.7%    14.3%   62.8%   91.9%   8.1%
 ```
 
-## Estrutura sugerida
+---
 
-```text
+## Arquitetura
+
+```
+                    ┌─────────────────┐
+                    │   FastF1 API    │
+                    │  (2022-2024)    │
+                    └────────┬────────┘
+                             │
+                    ┌────────▼────────┐
+                    │  make_dataset   │  96.598 voltas brutas
+                    │  + weather      │  + weather, race control,
+                    │  + ergast       │    Ergast quali/grid
+                    └────────┬────────┘
+                             │
+                    ┌────────▼────────┐
+                    │ build_features  │  59.362 voltas filtradas
+                    │  v4 (78 feat)   │  IQR + residual filter
+                    │  anti-leakage   │  10+ testes pytest
+                    └────────┬────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+     ┌────────▼──────┐ ┌────▼─────┐ ┌──────▼──────┐
+     │  Lap Time     │ │   DNF    │ │ Safety Car  │
+     │  XGBoost v3   │ │ LogReg   │ │ BetaBinom   │
+     │  RMSE=0.72    │ │ Brier    │ │ por pista   │
+     │  walk-forward │ │ =0.087   │ │             │
+     └────────┬──────┘ └────┬─────┘ └──────┬──────┘
+              │              │              │
+              └──────────────┼──────────────┘
+                             │
+                    ┌────────▼────────┐
+                    │   Monte Carlo   │  10.000 sims
+                    │   Simulator     │  em 12 segundos
+                    │   (vectorized)  │  (3.960x speedup)
+                    └────────┬────────┘
+                             │
+              ┌──────────────┼──────────────┐
+              │              │              │
+     ┌────────▼──────┐ ┌────▼─────┐ ┌──────▼──────┐
+     │ Probabilidades│ │Calibração│ │  Dashboard  │
+     │ Win/Podium/   │ │ Brier,   │ │  Streamlit  │
+     │ Top6/Top10    │ │ ECE,     │ │             │
+     │               │ │Reliab.   │ │             │
+     └───────────────┘ └──────────┘ └─────────────┘
+```
+
+---
+
+## Como usar
+
+### Instalação
+
+```bash
+git clone https://github.com/seu-usuario/F1-AI-Assistent.git
+cd F1-AI-Assistent
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# .venv\Scripts\activate   # Windows
+
+pip install fastf1 xgboost scikit-learn optuna mlflow pandas numpy joblib matplotlib streamlit plotly
+```
+
+### Pipeline completo (do zero)
+
+```bash
+# 1. Coleta de dados (2-4 horas, retomável)
+python src/data/make_dataset_v2.py
+
+# 2. Feature engineering (1 min)
+python src/features/build_features.py
+
+# 3. Treinar modelo de lap time (25-40 min)
+python src/models/train_global_optuna.py
+
+# 4. Treinar submodelos
+python src/dnf/build_dnf_dataset.py
+python src/dnf/train_dnf_model.py
+python src/dnf/train_sc_model.py
+python src/dnf/train_tyre_model.py
+
+# 5. Testes (todos devem passar)
+pytest tests/ -v
+
+# 6. Simular uma corrida
+python src/simulation/race_simulator.py
+
+# 7. Calibração (5 min)
+python src/simulation/extract_2024_results.py
+python src/simulation/calibrate_simulator.py
+
+# 8. Dashboard
+pip install streamlit plotly
+streamlit run dashboard.py
+```
+
+### Uso rápido (modelos já treinados)
+
+```python
+from src.simulation.race_simulator import RaceSimulator
+
+sim = RaceSimulator()
+results = sim.simulate(
+    gp="Monaco Grand Prix",
+    grid=[
+        {"driver": "VER", "team": "Red Bull Racing", "grid_pos": 1, "quali_pos": 1, "gap_to_pole_ms": 0},
+        {"driver": "LEC", "team": "Ferrari", "grid_pos": 2, "quali_pos": 2, "gap_to_pole_ms": 150},
+        # ... mais pilotos
+    ],
+    n_simulations=10_000,
+)
+
+print(results["probabilities"]["VER"]["win"])   # P(Verstappen vence)
+print(results["probabilities"]["LEC"]["podium"]) # P(Leclerc top 3)
+```
+
+---
+
+## Estrutura do projeto
+
+```
 F1-AI-Assistent/
-│
-├── data/
-│   ├── cache/
-│   ├── raw/
-│   └── processed/
-│
-├── models/
-│   ├── per_track/
-│   ├── per_track_optuna/
-│   ├── model.pkl
-│   ├── global_model_optuna.pkl
-│   ├── fold_results.csv
-│   ├── global_fold_results_optuna.csv
-│   └── comparison.csv
-│
 ├── src/
 │   ├── data/
-│   │   ├── make_dataset.py
-│   │   ├── make_dataset_full_season.py
-│   │   └── make_dataset_telemetry.py
-│   │
+│   │   └── make_dataset_v2.py          # Coleta FastF1 + weather + Ergast
 │   ├── features/
-│   │   └── build_features.py
-│   │
+│   │   ├── build_features.py           # Feature engineering v4 (78 features)
+│   │   └── target_encoding.py          # Target encoding CV-safe
 │   ├── models/
-│   │   ├── train.py
-│   │   ├── train_global_optuna.py
-│   │   ├── train_local_optuna.py
-│   │   ├── train_per_track.py
-│   │   ├── compare_global_vs_local.py
-│   │   └── predict_router.py
-│   │
+│   │   ├── train_global_optuna.py      # XGBoost + Optuna walk-forward
+│   │   └── diagnose_model.py           # Análise pós-treino
+│   ├── dnf/
+│   │   ├── build_dnf_dataset.py        # Dataset de DNF
+│   │   ├── train_dnf_model.py          # Modelo de DNF calibrado
+│   │   ├── train_sc_model.py           # Safety Car por pista
+│   │   └── train_tyre_model.py         # Degradação de pneu
 │   └── simulation/
-│       ├── track_real.py
-│       └── simulate_full.py
-│
-├── mlruns/
-├── requirements.txt
+│       ├── race_simulator.py           # Monte Carlo otimizado
+│       ├── extract_2024_results.py     # Resultados reais pra calibração
+│       └── calibrate_simulator.py      # Calibração formal
+├── tests/
+│   ├── test_no_leakage.py              # 6 testes anti-leakage
+│   ├── test_target_encoding.py         # 4 testes do encoder
+│   └── test_dnf.py                     # 5 testes do DNF
+├── models/                             # Artefatos treinados (.pkl, .json)
+├── data/
+│   ├── raw/                            # CSVs brutos do FastF1
+│   └── processed/                      # CSVs processados
+├── dashboard.py                        # Streamlit dashboard
 └── README.md
 ```
 
-## Pipeline de dados
+---
 
-### 1. Coleta de dados
-O projeto usa FastF1 para obter:
+## Decisões técnicas importantes
 
-- tempos de volta
-- setores
-- pneus
-- stint
-- posição
-- clima
-- track status
-- telemetria agregada por volta
+### 1. Anti-leakage rigoroso
+Toda feature derivada de lap time ou telemetria é **shiftada 1 volta pra trás** (sufixo `_prev`). Na volta N, o modelo só vê informação até N-1. Provado por 10+ testes pytest, incluindo um teste que **embaralha o target de voltas futuras e verifica que features do passado não mudam** — prova matemática de ausência de leakage.
 
-Exemplo de execução:
+### 2. Target encoding em vez de label encoding
+Label encoding trata categorias como ordinais (driver_code=5 parece estar "entre" 4 e 6), o que confunde árvores de decisão em validação por grupo. Testamos empiricamente: label encoding **piorava** o RMSE de 1.19 para 1.33. Target encoding com smoothing bayesiano captura "Verstappen é sistematicamente 0.99s mais rápido" sem ordinalidade espúria. Implementado com CV-safety (encoding calculado só no treino de cada fold).
 
-```bash
-python src/data/make_dataset_telemetry.py
-```
+### 3. Walk-forward em vez de GroupKFold
+GroupKFold por GP testa generalização para pistas nunca vistas — cenário irrealista. Walk-forward (treina 2022+2023, testa 2024) testa o cenário real: "prever o próximo ano". RMSE walk-forward foi melhor que GroupKFold (0.72 vs 0.77), confirmando que o modelo generaliza bem temporalmente.
 
-### 2. Build features
-O build de features gera variáveis como:
+### 4. Vetorização do simulador (3.960x speedup)
+v1 chamava `model.predict()` 5.8M vezes (1 por piloto/volta/simulação) → 13 horas. v2 faz 1 batch predict por volta com DataFrame de 100k linhas → 12 segundos. Mesmo resultado, 3.960x mais rápido. XGBoost é otimizado para batch prediction.
 
-- `CompoundEncoded`
-- `lap_time_mean_3`
-- `lap_time_delta`
-- `speed_delta`
-- `throttle_delta`
-- `brake_delta`
-- `degradation_score`
-- `aggression_score`
-- `consistency_score`
-- `efficiency_score`
-- `drs_usage_intensity`
-- `tyre_ratio`
-- `stint_progress`
-- `LapTimeResidual`
+### 5. Calibração honesta com baselines
+Todo modelo é comparado contra baseline trivial antes de ser aceito. O modelo de DNF quase não bate o trivial (+2.5%), e isso é **reportado honestamente**. O modelo de Safety Car é marginal. Transparência > métricas bonitas.
 
-Exemplo de execução:
+---
 
-```bash
-python src/features/build_features.py
-```
+## Limitações conhecidas
 
-## Modelagem
+- **Dados de 2022-2024 apenas.** Regulamentos de 2026 mudaram radicalmente (novos motores, chassis, DRS abolido). Modelos precisam ser retreinados com dados da era nova.
+- **Sem simulação de ultrapassagens explícitas.** Posições mudam por diferença de tempo acumulado, não por modelagem de aerodinâmica/DRS.
+- **Estratégia de pit stop fixa.** Na realidade cada equipe otimiza estratégia em tempo real.
+- **Weather fixo durante simulação.** Não modela mudança de condições durante a corrida.
+- **Pilotos novos (rookies) usam fallback do encoder.** Poucos dados = mais incerteza.
 
-### Modelo global
-O modelo global busca generalizar entre pistas.
+---
 
-- validação por `LeaveOneGroupOut`
-- grupo: `gp`
-- alvo: `LapTimeResidual`
+## Dados
 
-Execução:
+| Fonte | O que coleta | Volume |
+|-------|-------------|--------|
+| FastF1 | Telemetria por volta, weather, race control | 96.598 voltas |
+| Ergast/Jolpica | Qualifying results, grid position, gap to pole | 24 GPs/ano |
 
-```bash
-python src/models/train.py
-```
+---
 
-### Modelo global com Optuna
-Versão com ajuste de hiperparâmetros para o modelo global.
+## Referências técnicas
 
-Execução:
+- **XGBoost**: Chen & Guestrin (2016). *XGBoost: A Scalable Tree Boosting System*
+- **Target Encoding**: Micci-Barreca (2001). *A preprocessing scheme for high-cardinality categorical attributes*
+- **Calibração**: Niculescu-Mizil & Caruana (2005). *Predicting good probabilities with supervised learning*
+- **Monte Carlo em esportes**: Silver & Minka (2012). *Sports forecasting with Monte Carlo simulation*
+- **FastF1**: Oehrly (2020). *Python package for accessing Formula 1 data*
 
-```bash
-python src/models/train_global_optuna.py
-```
+---
 
-### Modelos locais por pista
-Os modelos locais são especialistas por circuito.
+## Licença
 
-Execução:
+Este projeto é um exercício técnico de ML aplicado. **Não é aconselhamento de apostas.** Apostas envolvem risco financeiro real e devem ser tratadas como entretenimento, não investimento.
 
-```bash
-python src/models/train_per_track.py
-```
+---
 
-### Modelos locais com Optuna
-Ajuste fino por pista crítica.
-
-Execução:
-
-```bash
-python src/models/train_local_optuna.py
-```
-
-## Comparação entre modelos
-
-Após treinar o global e os locais, é possível comparar os resultados:
-
-```bash
-python src/models/compare_global_vs_local.py
-```
-
-Saídas esperadas:
-
-- métricas globais por pista
-- métricas locais por pista
-- vencedor por pista
-- ganho de RMSE, MAE e R²
-
-## Router de inferência
-
-O roteador escolhe automaticamente qual modelo usar:
-
-- modelo local, quando existir para a pista
-- modelo global, como fallback
-
-Arquivo principal:
-
-```text
-src/models/predict_router.py
-```
-
-## MLOps
-
-O projeto já utiliza:
-
-- MLflow para tracking de experimentos
-- Optuna para tuning
-- organização de artefatos por modelo
-- comparação entre estratégias globais e locais
-
-Para abrir a interface do MLflow:
-
-```bash
-mlflow ui
-```
-
-## Resultados alcançados
-
-O modelo global avançado com telemetria apresentou desempenho consistente na maioria das pistas, enquanto os modelos locais mostraram melhor desempenho em circuitos específicos, especialmente os mais peculiares.
-
-Isso validou a arquitetura híbrida:
-
-- global como fallback
-- local como especialista
-
-## Próximos passos
-
-- corrigir e estabilizar o global com Optuna
-- expandir modelos locais para mais pistas
-- integrar `predict_router.py` à simulação
-- adicionar explicação por LLM local
-- construir dashboard de corrida
-- evoluir a simulação visual em pista real
-- estudar estratégia de pit stop mais avançada
-- testar ensemble entre global e local
-
-## Tecnologias usadas
-
-- Python
-- FastF1
-- Pandas
-- NumPy
-- XGBoost
-- Scikit-learn
-- MLflow
-- Optuna
-- Joblib
-- Matplotlib
-
-## Sugestão de fluxo de execução
-
-```bash
-python src/data/make_dataset_telemetry.py
-python src/features/build_features.py
-python src/models/train.py
-python src/models/train_per_track.py
-python src/models/compare_global_vs_local.py
-```
-
-## Autor
-
-Projeto em evolução com foco em IA aplicada à Fórmula 1, telemetria, estratégia, simulação e MLOps.
+*Desenvolvido em 3 sprints: (1) modelo honesto de lap time, (2) features de contexto + walk-forward, (3) simulador Monte Carlo calibrado com dashboard.*

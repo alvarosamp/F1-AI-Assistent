@@ -1,0 +1,479 @@
+gp,driver,team,grid_pos,quali_pos,gap_to_pole_ms,final_position,dnf
+Abu Dhabi Grand Prix,NOR,McLaren,1,1,0.0,1,0
+Abu Dhabi Grand Prix,SAI,Ferrari,3,3,229.0,2,0
+Abu Dhabi Grand Prix,LEC,Ferrari,14,14,1238.0,3,0
+Abu Dhabi Grand Prix,HAM,Mercedes,18,18,1292.0,4,0
+Abu Dhabi Grand Prix,RUS,Mercedes,7,7,537.0,5,0
+Abu Dhabi Grand Prix,VER,Red Bull Racing,5,5,350.0,6,0
+Abu Dhabi Grand Prix,GAS,Alpine,6,6,389.0,7,0
+Abu Dhabi Grand Prix,HUL,Haas F1 Team,4,4,291.0,8,0
+Abu Dhabi Grand Prix,ALO,Aston Martin,8,8,601.0,9,0
+Abu Dhabi Grand Prix,PIA,McLaren,2,2,209.0,10,0
+Abu Dhabi Grand Prix,ALB,Williams,16,16,1226.0,11,0
+Abu Dhabi Grand Prix,STR,Aston Martin,13,13,1189.0,12,0
+Abu Dhabi Grand Prix,TSU,RB,11,11,824.0,13,0
+Abu Dhabi Grand Prix,ZHO,Kick Sauber,17,17,1285.0,14,0
+Abu Dhabi Grand Prix,DOO,Alpine,20,20,1510.0,15,0
+Abu Dhabi Grand Prix,MAG,Haas F1 Team,15,15,1282.0,16,0
+Abu Dhabi Grand Prix,LAW,RB,12,12,877.0,17,0
+Abu Dhabi Grand Prix,BOT,Kick Sauber,9,9,609.0,99,1
+Abu Dhabi Grand Prix,COL,Williams,19,19,1317.0,99,1
+Abu Dhabi Grand Prix,PER,Red Bull Racing,10,10,669.0,99,1
+Australian Grand Prix,SAI,Ferrari,2,2,270.0,1,0
+Australian Grand Prix,LEC,Ferrari,5,5,520.0,2,0
+Australian Grand Prix,NOR,McLaren,4,4,400.0,3,0
+Australian Grand Prix,PIA,McLaren,6,6,657.0,4,0
+Australian Grand Prix,PER,Red Bull Racing,3,3,359.0,5,0
+Australian Grand Prix,ALO,Aston Martin,10,10,1637.0,6,0
+Australian Grand Prix,RUS,Mercedes,7,7,809.0,7,0
+Australian Grand Prix,STR,Aston Martin,9,9,1157.0,8,0
+Australian Grand Prix,TSU,RB,8,8,873.0,9,0
+Australian Grand Prix,HUL,Haas F1 Team,16,16,2061.0,10,0
+Australian Grand Prix,MAG,Haas F1 Team,14,14,1512.0,11,0
+Australian Grand Prix,ALB,Williams,12,12,1252.0,12,0
+Australian Grand Prix,RIC,RB,18,18,2170.0,13,0
+Australian Grand Prix,GAS,Alpine,17,17,2067.0,14,0
+Australian Grand Prix,BOT,Kick Sauber,13,13,1425.0,15,0
+Australian Grand Prix,ZHO,Kick Sauber,19,19,2273.0,16,0
+Australian Grand Prix,OCO,Alpine,15,15,1782.0,17,0
+Australian Grand Prix,HAM,Mercedes,11,11,1045.0,99,1
+Australian Grand Prix,VER,Red Bull Racing,1,1,0.0,99,1
+Austrian Grand Prix,RUS,Mercedes,3,3,526.0000000000073,1,0
+Austrian Grand Prix,PIA,McLaren,7,7,734.0000000000073,2,0
+Austrian Grand Prix,SAI,Ferrari,4,4,537.0000000000073,3,0
+Austrian Grand Prix,HAM,Mercedes,5,5,589.0000000000146,4,0
+Austrian Grand Prix,VER,Red Bull Racing,1,1,0.0,5,0
+Austrian Grand Prix,NOR,McLaren,2,2,404.0000000000073,6,0
+Austrian Grand Prix,HUL,Haas F1 Team,9,9,1071.0000000000146,7,0
+Austrian Grand Prix,PER,Red Bull Racing,8,8,888.0000000000073,8,0
+Austrian Grand Prix,MAG,Haas F1 Team,12,12,1033.0,9,0
+Austrian Grand Prix,RIC,RB,11,11,975.0000000000072,10,0
+Austrian Grand Prix,GAS,Alpine,13,13,1045.0,11,0
+Austrian Grand Prix,LEC,Ferrari,6,6,730.0000000000073,12,0
+Austrian Grand Prix,OCO,Alpine,10,10,1569.0000000000073,13,0
+Austrian Grand Prix,STR,Aston Martin,17,17,1505.0000000000073,14,0
+Austrian Grand Prix,ALB,Williams,16,16,1422.0000000000073,15,0
+Austrian Grand Prix,TSU,RB,14,14,1098.0000000000146,16,0
+Austrian Grand Prix,BOT,Kick Sauber,18,18,1533.0000000000073,17,0
+Austrian Grand Prix,ZHO,Kick Sauber,20,20,1747.0000000000073,18,0
+Austrian Grand Prix,ALO,Aston Martin,15,15,1325.0000000000073,19,0
+Austrian Grand Prix,SAR,Williams,19,19,1542.0000000000073,20,0
+Azerbaijan Grand Prix,PIA,McLaren,2,2,321.0,1,0
+Azerbaijan Grand Prix,LEC,Ferrari,1,1,0.0,2,0
+Azerbaijan Grand Prix,PER,Red Bull Racing,4,4,448.0,3,0
+Azerbaijan Grand Prix,RUS,Mercedes,5,5,509.0,4,0
+Azerbaijan Grand Prix,NOR,McLaren,16,16,2244.0,5,0
+Azerbaijan Grand Prix,SAI,Ferrari,3,3,440.0,6,0
+Azerbaijan Grand Prix,VER,Red Bull Racing,6,6,658.0,7,0
+Azerbaijan Grand Prix,ALO,Aston Martin,8,8,1004.0,8,0
+Azerbaijan Grand Prix,ALB,Williams,10,10,1494.0,9,0
+Azerbaijan Grand Prix,COL,Williams,9,9,1165.0,10,0
+Azerbaijan Grand Prix,HAM,Mercedes,7,7,924.0,11,0
+Azerbaijan Grand Prix,BEA,Haas F1 Team,11,11,1603.0,12,0
+Azerbaijan Grand Prix,HUL,Haas F1 Team,13,13,1826.0,13,0
+Azerbaijan Grand Prix,GAS,Alpine,15,15,1814.0,14,0
+Azerbaijan Grand Prix,RIC,RB,15,15,2182.0,15,0
+Azerbaijan Grand Prix,ZHO,Kick Sauber,18,18,2881.0,16,0
+Azerbaijan Grand Prix,OCO,Alpine,19,19,3139.0,17,0
+Azerbaijan Grand Prix,BOT,Kick Sauber,17,17,2253.0,18,0
+Azerbaijan Grand Prix,STR,Aston Martin,14,14,2039.0,99,1
+Azerbaijan Grand Prix,TSU,RB,12,12,1670.0,99,1
+Bahrain Grand Prix,VER,Red Bull Racing,1,1,0.0,1,0
+Bahrain Grand Prix,PER,Red Bull Racing,5,5,358.0,2,0
+Bahrain Grand Prix,SAI,Ferrari,4,4,328.0,3,0
+Bahrain Grand Prix,LEC,Ferrari,2,2,228.0,4,0
+Bahrain Grand Prix,RUS,Mercedes,3,3,306.0,5,0
+Bahrain Grand Prix,NOR,McLaren,7,7,435.0,6,0
+Bahrain Grand Prix,HAM,Mercedes,9,9,531.0,7,0
+Bahrain Grand Prix,PIA,McLaren,8,8,504.0,8,0
+Bahrain Grand Prix,ALO,Aston Martin,6,6,363.0,9,0
+Bahrain Grand Prix,STR,Aston Martin,12,12,1021.0,10,0
+Bahrain Grand Prix,ZHO,Kick Sauber,17,17,1578.0,11,0
+Bahrain Grand Prix,MAG,Haas F1 Team,15,15,1350.0,12,0
+Bahrain Grand Prix,RIC,RB,14,14,1099.0,13,0
+Bahrain Grand Prix,TSU,RB,11,11,950.0,14,0
+Bahrain Grand Prix,ALB,Williams,13,13,1042.0,15,0
+Bahrain Grand Prix,HUL,Haas F1 Team,10,10,1323.0,16,0
+Bahrain Grand Prix,OCO,Alpine,19,19,1614.0,17,0
+Bahrain Grand Prix,GAS,Alpine,20,20,1769.0,18,0
+Bahrain Grand Prix,BOT,Kick Sauber,16,16,1577.0,19,0
+Bahrain Grand Prix,SAR,Williams,18,18,1591.0,20,0
+Belgian Grand Prix,RUS,Mercedes,7,7,1025.0,1,0
+Belgian Grand Prix,HAM,Mercedes,4,4,676.0,2,0
+Belgian Grand Prix,PIA,McLaren,6,6,868.0,3,0
+Belgian Grand Prix,LEC,Ferrari,2,2,595.0,4,0
+Belgian Grand Prix,VER,Red Bull Racing,1,1,0.0,5,0
+Belgian Grand Prix,NOR,McLaren,5,5,822.0,6,0
+Belgian Grand Prix,SAI,Ferrari,8,8,1318.0,7,0
+Belgian Grand Prix,PER,Red Bull Racing,3,3,606.0,8,0
+Belgian Grand Prix,ALO,Aston Martin,9,9,1606.0,9,0
+Belgian Grand Prix,OCO,Alpine,10,10,1651.0,10,0
+Belgian Grand Prix,RIC,RB,13,13,1523.0,11,0
+Belgian Grand Prix,STR,Aston Martin,15,15,2557.0,12,0
+Belgian Grand Prix,ALB,Williams,11,11,1314.0,13,0
+Belgian Grand Prix,GAS,Alpine,12,12,1476.0,14,0
+Belgian Grand Prix,MAG,Haas F1 Team,17,17,3341.0,15,0
+Belgian Grand Prix,BOT,Kick Sauber,14,14,1605.0,16,0
+Belgian Grand Prix,TSU,RB,18,18,3434.0,17,0
+Belgian Grand Prix,SAR,Williams,19,19,4071.0,18,0
+Belgian Grand Prix,HUL,Haas F1 Team,16,16,3149.0,19,0
+Belgian Grand Prix,ZHO,Kick Sauber,20,20,4616.0,99,1
+British Grand Prix,HAM,Mercedes,2,2,171.0,1,0
+British Grand Prix,VER,Red Bull Racing,4,4,384.0,2,0
+British Grand Prix,NOR,McLaren,3,3,211.0,3,0
+British Grand Prix,PIA,McLaren,5,5,418.0,4,0
+British Grand Prix,SAI,Ferrari,7,7,690.0,5,0
+British Grand Prix,HUL,Haas F1 Team,6,6,519.0,6,0
+British Grand Prix,STR,Aston Martin,8,8,766.0,7,0
+British Grand Prix,ALO,Aston Martin,10,10,1098.0,8,0
+British Grand Prix,ALB,Williams,9,9,821.0,9,0
+British Grand Prix,TSU,RB,13,13,1450.0,10,0
+British Grand Prix,SAR,Williams,12,12,1356.0,11,0
+British Grand Prix,MAG,Haas F1 Team,17,17,7086.0,12,0
+British Grand Prix,RIC,RB,15,15,2130.0,13,0
+British Grand Prix,LEC,Ferrari,11,11,1278.0,14,0
+British Grand Prix,BOT,Kick Sauber,16,16,6612.0,15,0
+British Grand Prix,OCO,Alpine,18,18,8738.0,16,0
+British Grand Prix,PER,Red Bull Racing,19,19,12529.0,17,0
+British Grand Prix,ZHO,Kick Sauber,14,14,2048.0,18,0
+British Grand Prix,GAS,Alpine,20,20,13985.0,99,1
+British Grand Prix,RUS,Mercedes,1,1,0.0,99,1
+Canadian Grand Prix,VER,Red Bull Racing,2,2,0.0,1,0
+Canadian Grand Prix,NOR,McLaren,3,3,21.0,2,0
+Canadian Grand Prix,RUS,Mercedes,1,1,0.0,3,0
+Canadian Grand Prix,HAM,Mercedes,7,7,280.0,4,0
+Canadian Grand Prix,PIA,McLaren,4,4,103.0,5,0
+Canadian Grand Prix,ALO,Aston Martin,6,6,228.0,6,0
+Canadian Grand Prix,STR,Aston Martin,9,9,701.0,7,0
+Canadian Grand Prix,RIC,RB,5,5,178.0,8,0
+Canadian Grand Prix,GAS,Alpine,15,15,940.0,9,0
+Canadian Grand Prix,OCO,Alpine,18,18,1435.0,10,0
+Canadian Grand Prix,HUL,Haas F1 Team,19,19,1978.0,11,0
+Canadian Grand Prix,MAG,Haas F1 Team,14,14,916.0,12,0
+Canadian Grand Prix,BOT,Kick Sauber,17,17,1366.0,13,0
+Canadian Grand Prix,TSU,RB,8,8,414.0,14,0
+Canadian Grand Prix,ZHO,Kick Sauber,20,20,2292.0,15,0
+Canadian Grand Prix,ALB,Williams,10,10,796.0,99,1
+Canadian Grand Prix,LEC,Ferrari,11,11,691.0,99,1
+Canadian Grand Prix,PER,Red Bull Racing,16,16,1326.0,99,1
+Canadian Grand Prix,SAI,Ferrari,12,12,728.0,99,1
+Canadian Grand Prix,SAR,Williams,13,13,736.0,99,1
+Chinese Grand Prix,VER,Red Bull Racing,1,1,0.0,1,0
+Chinese Grand Prix,NOR,McLaren,4,4,505.0,2,0
+Chinese Grand Prix,PER,Red Bull Racing,2,2,322.0,3,0
+Chinese Grand Prix,LEC,Ferrari,6,6,629.0,4,0
+Chinese Grand Prix,SAI,Ferrari,7,7,637.0,5,0
+Chinese Grand Prix,RUS,Mercedes,8,8,773.0,6,0
+Chinese Grand Prix,ALO,Aston Martin,3,3,488.0,7,0
+Chinese Grand Prix,PIA,McLaren,5,5,613.0,8,0
+Chinese Grand Prix,HAM,Mercedes,18,18,1913.0,9,0
+Chinese Grand Prix,HUL,Haas F1 Team,9,9,944.0,10,0
+Chinese Grand Prix,OCO,Alpine,13,13,1563.0,11,0
+Chinese Grand Prix,ALB,Williams,14,14,1581.0,12,0
+Chinese Grand Prix,GAS,Alpine,15,15,1803.0,13,0
+Chinese Grand Prix,ZHO,Kick Sauber,16,16,1845.0,14,0
+Chinese Grand Prix,MAG,Haas F1 Team,17,17,1856.0,15,0
+Chinese Grand Prix,STR,Aston Martin,11,11,1178.0,16,0
+Chinese Grand Prix,SAR,Williams,20,20,2698.0,17,0
+Chinese Grand Prix,BOT,Kick Sauber,10,10,1005.0,99,1
+Chinese Grand Prix,RIC,RB,12,12,1274.0,99,1
+Chinese Grand Prix,TSU,RB,19,19,2086.0,99,1
+Dutch Grand Prix,NOR,McLaren,1,1,0.0,1,0
+Dutch Grand Prix,VER,Red Bull Racing,2,2,356.0,2,0
+Dutch Grand Prix,LEC,Ferrari,6,6,909.0,3,0
+Dutch Grand Prix,PIA,McLaren,3,3,499.0,4,0
+Dutch Grand Prix,SAI,Ferrari,10,10,1241.0,5,0
+Dutch Grand Prix,PER,Red Bull Racing,5,5,743.0,6,0
+Dutch Grand Prix,RUS,Mercedes,4,4,571.0,7,0
+Dutch Grand Prix,HAM,Mercedes,11,11,1275.0,8,0
+Dutch Grand Prix,GAS,Alpine,9,9,1304.0,9,0
+Dutch Grand Prix,ALO,Aston Martin,7,7,960.0,10,0
+Dutch Grand Prix,HUL,Haas F1 Team,13,13,1542.0,11,0
+Dutch Grand Prix,STR,Aston Martin,8,8,1184.0,12,0
+Dutch Grand Prix,RIC,RB,15,15,2270.0,13,0
+Dutch Grand Prix,ALB,Williams,10,10,980.0,14,0
+Dutch Grand Prix,OCO,Alpine,16,16,2322.0,15,0
+Dutch Grand Prix,SAR,Williams,20,20,3200.0,16,0
+Dutch Grand Prix,TSU,RB,12,12,1282.0,17,0
+Dutch Grand Prix,MAG,Haas F1 Team,14,14,1622.0,18,0
+Dutch Grand Prix,BOT,Kick Sauber,17,17,2495.0,19,0
+Dutch Grand Prix,ZHO,Kick Sauber,18,18,3588.0,20,0
+Emilia Romagna Grand Prix,VER,Red Bull Racing,1,1,0.0,1,0
+Emilia Romagna Grand Prix,NOR,McLaren,3,3,91.0,2,0
+Emilia Romagna Grand Prix,LEC,Ferrari,4,4,224.0,3,0
+Emilia Romagna Grand Prix,PIA,McLaren,2,2,74.0,4,0
+Emilia Romagna Grand Prix,SAI,Ferrari,5,5,487.0,5,0
+Emilia Romagna Grand Prix,HAM,Mercedes,8,8,758.0,6,0
+Emilia Romagna Grand Prix,RUS,Mercedes,6,6,488.0,7,0
+Emilia Romagna Grand Prix,PER,Red Bull Racing,11,11,960.0,8,0
+Emilia Romagna Grand Prix,STR,Aston Martin,13,13,1246.0,9,0
+Emilia Romagna Grand Prix,TSU,RB,7,7,719.0,10,0
+Emilia Romagna Grand Prix,HUL,Haas F1 Team,10,10,1234.0,11,0
+Emilia Romagna Grand Prix,MAG,Haas F1 Team,18,18,2108.0,12,0
+Emilia Romagna Grand Prix,RIC,RB,9,9,928.0,13,0
+Emilia Romagna Grand Prix,OCO,Alpine,12,12,1160.0,14,0
+Emilia Romagna Grand Prix,ZHO,Kick Sauber,17,17,2088.0,15,0
+Emilia Romagna Grand Prix,GAS,Alpine,15,15,1635.0,16,0
+Emilia Romagna Grand Prix,SAR,Williams,20,20,3400.0,17,0
+Emilia Romagna Grand Prix,BOT,Kick Sauber,16,16,1880.0,18,0
+Emilia Romagna Grand Prix,ALO,Aston Martin,19,19,2171.0,19,0
+Emilia Romagna Grand Prix,ALB,Williams,14,14,1454.0,99,1
+Hungarian Grand Prix,PIA,McLaren,2,2,22.0,1,0
+Hungarian Grand Prix,NOR,McLaren,1,1,0.0,2,0
+Hungarian Grand Prix,HAM,Mercedes,5,5,627.0,3,0
+Hungarian Grand Prix,LEC,Ferrari,6,6,678.0,4,0
+Hungarian Grand Prix,VER,Red Bull Racing,3,3,46.0,5,0
+Hungarian Grand Prix,SAI,Ferrari,4,4,469.0,6,0
+Hungarian Grand Prix,PER,Red Bull Racing,16,16,2659.0,7,0
+Hungarian Grand Prix,RUS,Mercedes,17,17,2741.0,8,0
+Hungarian Grand Prix,TSU,RB,10,10,1250.0,9,0
+Hungarian Grand Prix,STR,Aston Martin,8,8,1017.0,10,0
+Hungarian Grand Prix,ALO,Aston Martin,7,7,816.0,11,0
+Hungarian Grand Prix,RIC,RB,9,9,1220.0,12,0
+Hungarian Grand Prix,HUL,Haas F1 Team,11,11,1090.0,13,0
+Hungarian Grand Prix,ALB,Williams,13,13,1202.0,14,0
+Hungarian Grand Prix,MAG,Haas F1 Team,15,15,1321.0,15,0
+Hungarian Grand Prix,BOT,Kick Sauber,12,12,1157.0,16,0
+Hungarian Grand Prix,SAR,Williams,14,14,1316.0,17,0
+Hungarian Grand Prix,OCO,Alpine,19,19,2822.0,18,0
+Hungarian Grand Prix,ZHO,Kick Sauber,18,18,2810.0,19,0
+Hungarian Grand Prix,GAS,Alpine,20,20,2939.0,99,1
+Italian Grand Prix,LEC,Ferrari,4,4,134.0,1,0
+Italian Grand Prix,PIA,McLaren,2,2,109.0,2,0
+Italian Grand Prix,NOR,McLaren,1,1,0.0,3,0
+Italian Grand Prix,SAI,Ferrari,5,5,140.0,4,0
+Italian Grand Prix,HAM,Mercedes,6,6,186.0,5,0
+Italian Grand Prix,VER,Red Bull Racing,7,7,695.0,6,0
+Italian Grand Prix,RUS,Mercedes,3,3,113.0,7,0
+Italian Grand Prix,PER,Red Bull Racing,8,8,735.0,8,0
+Italian Grand Prix,MAG,Haas F1 Team,13,13,1371.0,9,0
+Italian Grand Prix,ALB,Williams,9,9,972.0,10,0
+Italian Grand Prix,ALO,Aston Martin,11,11,1094.0,11,0
+Italian Grand Prix,RIC,RB,12,12,1152.0,12,0
+Italian Grand Prix,COL,Williams,18,18,1734.0,13,0
+Italian Grand Prix,OCO,Alpine,15,15,1439.0,14,0
+Italian Grand Prix,GAS,Alpine,14,14,1411.0,15,0
+Italian Grand Prix,BOT,Kick Sauber,19,19,1774.0,16,0
+Italian Grand Prix,HUL,Haas F1 Team,10,10,1012.0,17,0
+Italian Grand Prix,ZHO,Kick Sauber,20,20,2118.0,18,0
+Italian Grand Prix,STR,Aston Martin,17,17,1686.0,19,0
+Italian Grand Prix,TSU,RB,16,16,1618.0,99,1
+Japanese Grand Prix,VER,Red Bull Racing,1,1,0.0,1,0
+Japanese Grand Prix,PER,Red Bull Racing,2,2,66.0,2,0
+Japanese Grand Prix,SAI,Ferrari,4,4,485.0,3,0
+Japanese Grand Prix,LEC,Ferrari,8,8,589.0,4,0
+Japanese Grand Prix,NOR,McLaren,3,3,292.0,5,0
+Japanese Grand Prix,ALO,Aston Martin,5,5,489.0,6,0
+Japanese Grand Prix,RUS,Mercedes,9,9,811.0,7,0
+Japanese Grand Prix,PIA,McLaren,6,6,563.0,8,0
+Japanese Grand Prix,HAM,Mercedes,7,7,569.0,9,0
+Japanese Grand Prix,TSU,RB,10,10,1216.0,10,0
+Japanese Grand Prix,HUL,Haas F1 Team,12,12,1297.0,11,0
+Japanese Grand Prix,STR,Aston Martin,16,16,1827.0,12,0
+Japanese Grand Prix,MAG,Haas F1 Team,18,18,1934.0,13,0
+Japanese Grand Prix,BOT,Kick Sauber,13,13,1396.0,14,0
+Japanese Grand Prix,OCO,Alpine,15,15,1619.0,15,0
+Japanese Grand Prix,GAS,Alpine,17,17,1922.0,16,0
+Japanese Grand Prix,SAR,Williams,19,19,1942.0,17,0
+Japanese Grand Prix,ALB,Williams,14,14,1517.0,99,1
+Japanese Grand Prix,RIC,RB,11,11,1275.0,99,1
+Japanese Grand Prix,ZHO,Kick Sauber,20,20,1946.0,99,1
+Las Vegas Grand Prix,RUS,Mercedes,1,1,0.0,1,0
+Las Vegas Grand Prix,HAM,Mercedes,10,10,15794.0,2,0
+Las Vegas Grand Prix,SAI,Ferrari,2,2,98.0,3,0
+Las Vegas Grand Prix,LEC,Ferrari,4,4,471.0,4,0
+Las Vegas Grand Prix,VER,Red Bull Racing,5,5,485.0,5,0
+Las Vegas Grand Prix,NOR,McLaren,6,6,696.0,6,0
+Las Vegas Grand Prix,PIA,McLaren,8,8,721.0,7,0
+Las Vegas Grand Prix,HUL,Haas F1 Team,9,9,750.0,8,0
+Las Vegas Grand Prix,TSU,RB,7,7,717.0,9,0
+Las Vegas Grand Prix,PER,Red Bull Racing,16,16,1843.0,10,0
+Las Vegas Grand Prix,ALO,Aston Martin,17,17,1946.0,11,0
+Las Vegas Grand Prix,MAG,Haas F1 Team,12,12,985.0,12,0
+Las Vegas Grand Prix,ZHO,Kick Sauber,13,13,1254.0,13,0
+Las Vegas Grand Prix,COL,Williams,14,14,1437.0,14,0
+Las Vegas Grand Prix,STR,Aston Martin,20,20,2172.0,15,0
+Las Vegas Grand Prix,LAW,RB,15,15,1945.0,16,0
+Las Vegas Grand Prix,OCO,Alpine,11,11,909.0,17,0
+Las Vegas Grand Prix,BOT,Kick Sauber,19,19,2118.0,18,0
+Las Vegas Grand Prix,ALB,Williams,18,18,2113.0,99,1
+Las Vegas Grand Prix,GAS,Alpine,3,3,352.0,99,1
+Mexico City Grand Prix,SAI,Ferrari,1,1,0.0,1,0
+Mexico City Grand Prix,NOR,McLaren,3,3,314.0,2,0
+Mexico City Grand Prix,LEC,Ferrari,4,4,319.0,3,0
+Mexico City Grand Prix,HAM,Mercedes,6,6,705.0,4,0
+Mexico City Grand Prix,RUS,Mercedes,5,5,410.0,5,0
+Mexico City Grand Prix,VER,Red Bull Racing,2,2,225.0,6,0
+Mexico City Grand Prix,MAG,Haas F1 Team,7,7,940.0,7,0
+Mexico City Grand Prix,PIA,McLaren,17,17,1651.0,8,0
+Mexico City Grand Prix,HUL,Haas F1 Team,10,10,1419.0,9,0
+Mexico City Grand Prix,GAS,Alpine,8,8,946.0,10,0
+Mexico City Grand Prix,STR,Aston Martin,14,14,1348.0,11,0
+Mexico City Grand Prix,COL,Williams,16,16,1612.0,12,0
+Mexico City Grand Prix,OCO,Alpine,19,19,1671.0,13,0
+Mexico City Grand Prix,BOT,Kick Sauber,15,15,1871.0,14,0
+Mexico City Grand Prix,ZHO,Kick Sauber,20,20,2126.0,15,0
+Mexico City Grand Prix,LAW,RB,12,12,1216.0,16,0
+Mexico City Grand Prix,PER,Red Bull Racing,18,18,1665.0,17,0
+Mexico City Grand Prix,ALB,Williams,9,9,1119.0,99,1
+Mexico City Grand Prix,ALO,Aston Martin,13,13,1222.0,99,1
+Mexico City Grand Prix,TSU,RB,11,11,1183.0,99,1
+Miami Grand Prix,NOR,McLaren,5,5,353.0,1,0
+Miami Grand Prix,VER,Red Bull Racing,1,1,0.0,2,0
+Miami Grand Prix,LEC,Ferrari,2,2,141.0,3,0
+Miami Grand Prix,SAI,Ferrari,3,3,214.0,4,0
+Miami Grand Prix,PER,Red Bull Racing,4,4,219.0,5,0
+Miami Grand Prix,HAM,Mercedes,8,8,866.0,6,0
+Miami Grand Prix,TSU,RB,10,10,951.0,7,0
+Miami Grand Prix,RUS,Mercedes,7,7,826.0,8,0
+Miami Grand Prix,ALO,Aston Martin,15,15,1186.0,9,0
+Miami Grand Prix,OCO,Alpine,13,13,1130.0,10,0
+Miami Grand Prix,HUL,Haas F1 Team,9,9,905.0,11,0
+Miami Grand Prix,GAS,Alpine,12,12,1083.0,12,0
+Miami Grand Prix,STR,Aston Martin,11,11,981.0,13,0
+Miami Grand Prix,PIA,McLaren,6,6,434.0,14,0
+Miami Grand Prix,ZHO,Kick Sauber,20,20,1583.0,15,0
+Miami Grand Prix,RIC,RB,18,18,1376.0,16,0
+Miami Grand Prix,BOT,Kick Sauber,16,16,1222.0,17,0
+Miami Grand Prix,MAG,Haas F1 Team,19,19,1378.0,18,0
+Miami Grand Prix,ALB,Williams,14,14,1172.0,19,0
+Miami Grand Prix,SAR,Williams,17,17,1246.0,99,1
+Monaco Grand Prix,LEC,Ferrari,1,1,0.0,1,0
+Monaco Grand Prix,PIA,McLaren,2,2,154.0,2,0
+Monaco Grand Prix,SAI,Ferrari,3,3,248.0,3,0
+Monaco Grand Prix,NOR,McLaren,4,4,272.0,4,0
+Monaco Grand Prix,RUS,Mercedes,5,5,273.0,5,0
+Monaco Grand Prix,VER,Red Bull Racing,6,6,297.0,6,0
+Monaco Grand Prix,HAM,Mercedes,7,7,351.0,7,0
+Monaco Grand Prix,TSU,RB,8,8,588.0,8,0
+Monaco Grand Prix,ALB,Williams,9,9,678.0,9,0
+Monaco Grand Prix,GAS,Alpine,10,10,1041.0,10,0
+Monaco Grand Prix,ALO,Aston Martin,14,14,1749.0,11,0
+Monaco Grand Prix,RIC,RB,12,12,1212.0,12,0
+Monaco Grand Prix,BOT,Kick Sauber,17,17,2242.0,13,0
+Monaco Grand Prix,STR,Aston Martin,13,13,1293.0,14,0
+Monaco Grand Prix,SAR,Williams,15,15,1750.0,15,0
+Monaco Grand Prix,ZHO,Kick Sauber,18,18,2758.0,16,0
+Monaco Grand Prix,HUL,Haas F1 Team,14,14,1170.0,99,1
+Monaco Grand Prix,MAG,Haas F1 Team,15,15,1455.0,99,1
+Monaco Grand Prix,OCO,Alpine,11,11,1015.0,99,1
+Monaco Grand Prix,PER,Red Bull Racing,16,16,1790.0,99,1
+Qatar Grand Prix,VER,Red Bull Racing,1,1,0.0,1,0
+Qatar Grand Prix,LEC,Ferrari,5,5,332.0,2,0
+Qatar Grand Prix,PIA,McLaren,4,4,309.0,3,0
+Qatar Grand Prix,RUS,Mercedes,2,2,55.0,4,0
+Qatar Grand Prix,GAS,Alpine,11,11,917.0,5,0
+Qatar Grand Prix,SAI,Ferrari,7,7,521.0,6,0
+Qatar Grand Prix,ALO,Aston Martin,8,8,731.0,7,0
+Qatar Grand Prix,ZHO,Kick Sauber,12,12,981.0,8,0
+Qatar Grand Prix,MAG,Haas F1 Team,10,10,980.0,9,0
+Qatar Grand Prix,NOR,McLaren,3,3,252.0,10,0
+Qatar Grand Prix,BOT,Kick Sauber,13,13,1211.0,11,0
+Qatar Grand Prix,HAM,Mercedes,6,6,491.0,12,0
+Qatar Grand Prix,TSU,RB,14,14,1251.0,13,0
+Qatar Grand Prix,LAW,RB,17,17,1891.0,14,0
+Qatar Grand Prix,ALB,Williams,16,16,1870.0,15,0
+Qatar Grand Prix,COL,Williams,19,19,2074.0,99,1
+Qatar Grand Prix,HUL,Haas F1 Team,18,18,1922.0,99,1
+Qatar Grand Prix,OCO,Alpine,20,20,2194.0,99,1
+Qatar Grand Prix,PER,Red Bull Racing,9,9,905.0,99,1
+Qatar Grand Prix,STR,Aston Martin,15,15,1391.0,99,1
+Saudi Arabian Grand Prix,VER,Red Bull Racing,1,1,0.0,1,0
+Saudi Arabian Grand Prix,PER,Red Bull Racing,3,3,335.0,2,0
+Saudi Arabian Grand Prix,LEC,Ferrari,2,2,319.0,3,0
+Saudi Arabian Grand Prix,PIA,McLaren,5,5,617.0,4,0
+Saudi Arabian Grand Prix,ALO,Aston Martin,4,4,374.0,5,0
+Saudi Arabian Grand Prix,RUS,Mercedes,7,7,844.0,6,0
+Saudi Arabian Grand Prix,BEA,Ferrari,11,11,1170.0,7,0
+Saudi Arabian Grand Prix,NOR,McLaren,6,6,660.0,8,0
+Saudi Arabian Grand Prix,HAM,Mercedes,8,8,988.0,9,0
+Saudi Arabian Grand Prix,HUL,Haas F1 Team,15,15,1583.0,10,0
+Saudi Arabian Grand Prix,MAG,Haas F1 Team,13,13,1548.0,11,0
+Saudi Arabian Grand Prix,ALB,Williams,12,12,1508.0,12,0
+Saudi Arabian Grand Prix,OCO,Alpine,17,17,2003.0,13,0
+Saudi Arabian Grand Prix,TSU,RB,9,9,1075.0,14,0
+Saudi Arabian Grand Prix,SAR,Williams,19,19,2054.0,15,0
+Saudi Arabian Grand Prix,RIC,RB,14,14,1553.0,16,0
+Saudi Arabian Grand Prix,BOT,Kick Sauber,16,16,1707.0,17,0
+Saudi Arabian Grand Prix,ZHO,Kick Sauber,20,20,3600.0,18,0
+Saudi Arabian Grand Prix,GAS,Alpine,18,18,2007.0,99,1
+Saudi Arabian Grand Prix,STR,Aston Martin,10,10,1100.0,99,1
+Singapore Grand Prix,NOR,McLaren,1,1,0.0,1,0
+Singapore Grand Prix,VER,Red Bull Racing,2,2,203.0,2,0
+Singapore Grand Prix,PIA,McLaren,5,5,428.0,3,0
+Singapore Grand Prix,RUS,Mercedes,4,4,342.0,4,0
+Singapore Grand Prix,LEC,Ferrari,9,9,222.0,5,0
+Singapore Grand Prix,HAM,Mercedes,3,3,316.0,6,0
+Singapore Grand Prix,SAI,Ferrari,10,10,583.0,7,0
+Singapore Grand Prix,ALO,Aston Martin,7,7,689.0,8,0
+Singapore Grand Prix,HUL,Haas F1 Team,6,6,590.0,9,0
+Singapore Grand Prix,PER,Red Bull Racing,13,13,1054.0,10,0
+Singapore Grand Prix,COL,Williams,12,12,956.0,11,0
+Singapore Grand Prix,TSU,RB,8,8,829.0,12,0
+Singapore Grand Prix,OCO,Alpine,15,15,1244.0,13,0
+Singapore Grand Prix,STR,Aston Martin,17,17,1569.0,14,0
+Singapore Grand Prix,ZHO,Kick Sauber,20,20,2529.0,15,0
+Singapore Grand Prix,BOT,Kick Sauber,19,19,2047.0,16,0
+Singapore Grand Prix,GAS,Alpine,18,18,1787.0,17,0
+Singapore Grand Prix,RIC,RB,16,16,1560.0,18,0
+Singapore Grand Prix,MAG,Haas F1 Team,14,14,1128.0,19,0
+Singapore Grand Prix,ALB,Williams,11,11,949.0,99,1
+Spanish Grand Prix,VER,Red Bull Racing,2,2,20.0,1,0
+Spanish Grand Prix,NOR,McLaren,1,1,0.0,2,0
+Spanish Grand Prix,HAM,Mercedes,3,3,318.0,3,0
+Spanish Grand Prix,RUS,Mercedes,4,4,320.0,4,0
+Spanish Grand Prix,LEC,Ferrari,5,5,348.0,5,0
+Spanish Grand Prix,SAI,Ferrari,6,6,353.0,6,0
+Spanish Grand Prix,PIA,McLaren,10,10,628.0,7,0
+Spanish Grand Prix,PER,Red Bull Racing,8,8,678.0,8,0
+Spanish Grand Prix,GAS,Alpine,7,7,474.0,9,0
+Spanish Grand Prix,OCO,Alpine,9,9,742.0,10,0
+Spanish Grand Prix,HUL,Haas F1 Team,13,13,927.0,11,0
+Spanish Grand Prix,ALO,Aston Martin,11,11,745.0,12,0
+Spanish Grand Prix,ZHO,Kick Sauber,15,15,1355.0,13,0
+Spanish Grand Prix,STR,Aston Martin,14,14,989.0,14,0
+Spanish Grand Prix,RIC,RB,18,18,1692.0,15,0
+Spanish Grand Prix,BOT,Kick Sauber,12,12,844.0,16,0
+Spanish Grand Prix,MAG,Haas F1 Team,16,16,1554.0,17,0
+Spanish Grand Prix,ALB,Williams,19,19,1770.0,18,0
+Spanish Grand Prix,TSU,RB,17,17,1602.0,19,0
+Spanish Grand Prix,SAR,Williams,20,20,2126.0,20,0
+São Paulo Grand Prix,VER,Red Bull Racing,12,12,4366.0,1,0
+São Paulo Grand Prix,OCO,Alpine,4,4,1070.0,2,0
+São Paulo Grand Prix,GAS,Alpine,15,15,6209.0,3,0
+São Paulo Grand Prix,RUS,Mercedes,2,2,173.0,4,0
+São Paulo Grand Prix,LEC,Ferrari,6,6,1120.0,5,0
+São Paulo Grand Prix,NOR,McLaren,1,1,0.0,6,0
+São Paulo Grand Prix,PIA,McLaren,8,8,1281.0,7,0
+São Paulo Grand Prix,TSU,RB,3,3,706.0,8,0
+São Paulo Grand Prix,LAW,RB,5,5,1079.0,9,0
+São Paulo Grand Prix,HAM,Mercedes,16,16,7745.0,10,0
+São Paulo Grand Prix,PER,Red Bull Racing,13,13,4753.0,11,0
+São Paulo Grand Prix,BEA,Haas F1 Team,17,17,7824.0,12,0
+São Paulo Grand Prix,BOT,Kick Sauber,11,11,3067.0,13,0
+São Paulo Grand Prix,ALO,Aston Martin,9,9,5593.0,14,0
+São Paulo Grand Prix,ZHO,Kick Sauber,20,20,8858.0,15,0
+São Paulo Grand Prix,COL,Williams,18,18,7865.0,99,1
+São Paulo Grand Prix,HUL,Haas F1 Team,19,19,8218.0,99,1
+São Paulo Grand Prix,SAI,Ferrari,14,14,6001.0,99,1
+São Paulo Grand Prix,STR,Aston Martin,10,10,2929.0,99,1
+United States Grand Prix,LEC,Ferrari,4,4,410.0,1,0
+United States Grand Prix,SAI,Ferrari,3,3,322.0,2,0
+United States Grand Prix,NOR,McLaren,1,1,0.0,3,0
+United States Grand Prix,VER,Red Bull Racing,2,2,31.0,4,0
+United States Grand Prix,PIA,McLaren,5,5,620.0,5,0
+United States Grand Prix,RUS,Mercedes,6,6,644.0,6,0
+United States Grand Prix,PER,Red Bull Racing,10,10,690.0,7,0
+United States Grand Prix,HUL,Haas F1 Team,12,12,1214.0,8,0
+United States Grand Prix,LAW,RB,15,15,1009.0,9,0
+United States Grand Prix,COL,Williams,17,17,1732.0,10,0
+United States Grand Prix,MAG,Haas F1 Team,9,9,1151.0,11,0
+United States Grand Prix,GAS,Alpine,7,7,688.0,12,0
+United States Grand Prix,ALO,Aston Martin,8,8,979.0,13,0
+United States Grand Prix,TSU,RB,11,11,1176.0,14,0
+United States Grand Prix,STR,Aston Martin,14,14,1429.0,15,0
+United States Grand Prix,ALB,Williams,16,16,1721.0,16,0
+United States Grand Prix,BOT,Kick Sauber,18,18,1822.0,17,0
+United States Grand Prix,OCO,Alpine,13,13,1267.0,18,0
+United States Grand Prix,ZHO,Kick Sauber,20,20,1898.0,19,0
+United States Grand Prix,HAM,Mercedes,19,19,1824.0,99,1

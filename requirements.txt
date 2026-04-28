@@ -1,2 +1,11 @@
 fastf1
+joblib
+matplotlib
+mlflow
+numpy
+optuna
 pandas
+plotly
+scikit-learn
+streamlit
+xgboost
