@@ -1,0 +1,17 @@
+driver,market,odds,sportsbook
+NOR,win,3.20,manual
+VER,win,3.60,manual
+PIA,win,5.50,manual
+LEC,win,8.00,manual
+RUS,win,12.00,manual
+NOR,podium,1.55,manual
+VER,podium,1.70,manual
+PIA,podium,2.10,manual
+LEC,podium,2.60,manual
+RUS,podium,3.25,manual
+HAM,podium,4.50,manual
+SAI,podium,5.00,manual
+RUS,top6,1.75,manual
+HAM,top6,2.05,manual
+SAI,top6,2.20,manual
+ALO,top6,4.00,manual

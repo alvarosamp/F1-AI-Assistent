@@ -108,7 +108,7 @@ python -m venv .venv
 source .venv/bin/activate  # Linux/Mac
 # .venv\Scripts\activate   # Windows
 
-pip install fastf1 xgboost scikit-learn optuna mlflow pandas numpy joblib matplotlib streamlit plotly
+pip install -r requirements.txt
 ```
 
 ### Pipeline completo (do zero)
@@ -125,29 +125,31 @@ python src/models/train_global_optuna.py
 
 # 4. Treinar submodelos
 python src/dnf/build_dnf_dataset.py
-python src/dnf/train_dnf_model.py
+python src/dnf/train_dnf.py
 python src/dnf/train_sc_model.py
-python src/dnf/train_tyre_model.py
+python src/dnf/tyre_model.py
 
 # 5. Testes (todos devem passar)
-pytest tests/ -v
+pytest tests/ src/tests/ -v
 
 # 6. Simular uma corrida
-python src/simulation/race_simulator.py
+python src/simulation/race_simulate.py
 
 # 7. Calibração (5 min)
 python src/simulation/extract_2024_results.py
-python src/simulation/calibrate_simulator.py
+python src/simulation/calibrate_simulate.py
 
-# 8. Dashboard
-pip install streamlit plotly
+# 8. Previsão de uma race week (grid de qualifying real)
+python src/predict_race_week.py --gp "Australian Grand Prix" --grid examples/race_week_grid.csv --sims 2000
+
+# 9. Dashboard
 streamlit run dashboard.py
 ```
 
 ### Uso rápido (modelos já treinados)
 
 ```python
-from src.simulation.race_simulator import RaceSimulator
+from src.simulation.race_simulate import RaceSimulator
 
 sim = RaceSimulator()
 results = sim.simulate(
@@ -174,28 +176,42 @@ F1-AI-Assistent/
 │   ├── data/
 │   │   └── make_dataset_v2.py          # Coleta FastF1 + weather + Ergast
 │   ├── features/
-│   │   ├── build_features.py           # Feature engineering v4 (78 features)
+│   │   ├── build_features_v4.py        # Feature engineering v4 (78 features)
 │   │   └── target_encoding.py          # Target encoding CV-safe
 │   ├── models/
 │   │   ├── train_global_optuna.py      # XGBoost + Optuna walk-forward
-│   │   └── diagnose_model.py           # Análise pós-treino
+│   │   └── analise_modelo.py           # Análise pós-treino
 │   ├── dnf/
 │   │   ├── build_dnf_dataset.py        # Dataset de DNF
-│   │   ├── train_dnf_model.py          # Modelo de DNF calibrado
+│   │   ├── train_dnf.py                # Modelo de DNF calibrado
 │   │   ├── train_sc_model.py           # Safety Car por pista
-│   │   └── train_tyre_model.py         # Degradação de pneu
-│   └── simulation/
-│       ├── race_simulator.py           # Monte Carlo otimizado
-│       ├── extract_2024_results.py     # Resultados reais pra calibração
-│       └── calibrate_simulator.py      # Calibração formal
+│   │   └── tyre_model.py               # Degradação de pneu
+│   ├── simulation/
+│   │   ├── race_simulate.py            # Monte Carlo otimizado (RaceSimulator)
+│   │   ├── extract_2024_results.py     # Resultados reais pra calibração
+│   │   └── calibrate_simulate.py       # Calibração formal
+│   ├── strategy/
+│   │   └── pit_stop_model.py           # Modelo de decisão de pit stop
+│   ├── telemetry/
+│   │   ├── telemetry_signals.py        # Extração de sinais de telemetria
+│   │   └── plot_lap_telemetry.py       # Visualização de telemetria por volta
+│   ├── llm/
+│   │   └── engenheiro.py               # Explicação em linguagem natural das decisões (LLM)
+│   ├── betting_recommender.py          # Ranking de apostas por EV a partir das probabilidades
+│   └── predict_race_week.py            # CLI de previsão pós-qualifying
 ├── tests/
-│   ├── test_no_leakage.py              # 6 testes anti-leakage
-│   ├── test_target_encoding.py         # 4 testes do encoder
-│   └── test_dnf.py                     # 5 testes do DNF
+│   └── test_betting_recommender.py     # Testes do recomendador de apostas
+├── src/tests/
+│   ├── test_no_leakage.py              # Testes anti-leakage
+│   ├── test_leakage_features.py        # Testes anti-leakage (features)
+│   └── test_target_encoding.py         # Testes do encoder
+├── examples/                           # CSVs de exemplo (grid de race week, etc.)
+├── docs/                               # Documentação adicional
 ├── models/                             # Artefatos treinados (.pkl, .json)
 ├── data/
 │   ├── raw/                            # CSVs brutos do FastF1
 │   └── processed/                      # CSVs processados
+├── dvc.yaml / dvc.lock                 # Pipeline versionado com DVC
 ├── dashboard.py                        # Streamlit dashboard
 └── README.md
 ```

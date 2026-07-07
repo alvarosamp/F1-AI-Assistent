@@ -1,0 +1,11 @@
+driver,team,grid_pos,quali_pos,gap_to_pole_ms,avg_residual_recent
+NOR,McLaren,1,1,0,-0.05
+VER,Red Bull Racing,2,2,95,-0.02
+PIA,McLaren,3,3,170,-0.03
+LEC,Ferrari,4,4,240,0.01
+RUS,Mercedes,5,5,320,0.04
+HAM,Mercedes,6,6,410,0.06
+SAI,Ferrari,7,7,480,0.03
+ALO,Aston Martin,8,8,650,0.10
+PER,Red Bull Racing,9,9,780,0.08
+STR,Aston Martin,10,10,940,0.15
