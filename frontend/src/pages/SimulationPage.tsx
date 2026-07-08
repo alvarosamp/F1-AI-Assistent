@@ -92,7 +92,7 @@ export function SimulationPage() {
       <PageHeader title="Simulação Monte Carlo" subtitle="Selecione o GP e o grid de largada para simular a corrida" />
 
       <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6">
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-5 h-fit space-y-4">
+        <div className="card p-5 h-fit space-y-4">
           <h3 className="font-bold text-lg">⚙️ Parâmetros</h3>
 
           <div>
@@ -164,7 +164,7 @@ export function SimulationPage() {
         <div className="space-y-6">
           {result && (
             <>
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-4 overflow-x-auto">
+              <div className="card p-4 overflow-x-auto">
                 <h3 className="text-lg font-bold mb-3">Resultados — {result.gp}</h3>
                 <table className="w-full text-sm">
                   <thead>

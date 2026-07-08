@@ -20,7 +20,7 @@ export function ModelAnalysisPage() {
       <PageHeader title="Análise do Modelo v3" subtitle="Feature importance, performance por GP e piloto" />
 
       {impData.length > 0 && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-4 mb-8">
+        <div className="card p-4 mb-8">
           <h3 className="text-lg font-bold mb-3">📊 Feature Importance (Top 20)</h3>
           <ResponsiveContainer width="100%" height={550}>
             <BarChart data={impData} layout="vertical" margin={{ left: 40, right: 40 }}>
@@ -48,7 +48,7 @@ export function ModelAnalysisPage() {
       </div>
 
       {rmseData.length > 0 && (
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+        <div className="card p-4">
           <h3 className="text-lg font-bold mb-3">🌍 RMSE por Grand Prix (Ordenado)</h3>
           <ResponsiveContainer width="100%" height={450}>
             <BarChart data={rmseData} margin={{ bottom: 90 }}>
@@ -70,7 +70,7 @@ export function ModelAnalysisPage() {
 
 function MetricBox({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4 text-center">
+    <div className="card p-4 text-center">
       <div className="text-2xl font-extrabold">{value}</div>
       <div className="text-xs text-gray-400 uppercase tracking-wider mt-1">{label}</div>
     </div>

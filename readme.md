@@ -4,7 +4,8 @@
 
 Dado um grid de largada e um Grand Prix, o sistema simula a corrida **10.000 vezes em 12 segundos** e produz distribuições de probabilidade por piloto, validadas contra resultados reais.
 
-![Python](https://img.shields.io/badge/python-3.10+-blue)
+![Python](https://img.shields.io/badge/python-3.11+-blue)
+![React](https://img.shields.io/badge/frontend-React_+_Vite-61dafb)
 ![Status](https://img.shields.io/badge/status-v3.0_Sprint_3_complete-green)
 
 ---
@@ -88,12 +89,14 @@ Driver     Win   Podium    Top6   Top10    DNF
               ┌──────────────┼──────────────┐
               │              │              │
      ┌────────▼──────┐ ┌────▼─────┐ ┌──────▼──────┐
-     │ Probabilidades│ │Calibração│ │  Dashboard  │
-     │ Win/Podium/   │ │ Brier,   │ │  Streamlit  │
-     │ Top6/Top10    │ │ ECE,     │ │             │
-     │               │ │Reliab.   │ │             │
+     │ Probabilidades│ │Calibração│ │  FastAPI    │
+     │ Win/Podium/   │ │ Brier,   │ │  backend    │
+     │ Top6/Top10    │ │ ECE,     │ │      +      │
+     │               │ │Reliab.   │ │ React front │
      └───────────────┘ └──────────┘ └─────────────┘
 ```
+
+A interface (`backend/` + `frontend/`) expõe tudo isso via API REST + SPA React: **Ao Vivo** (replay real de corridas passadas ou conexão ao live timing real da F1), **Previsões** (simulação Monte Carlo interativa), **Engenharia** (telemetria real por sessão FP/Q/R), **Modelo** e **Calibração**. Ver [seção "Interface web"](#interface-web) abaixo.
 
 ---
 
@@ -142,8 +145,8 @@ python src/simulation/calibrate_simulate.py
 # 8. Previsão de uma race week (grid de qualifying real)
 python src/predict_race_week.py --gp "Australian Grand Prix" --grid examples/race_week_grid.csv --sims 2000
 
-# 9. Dashboard
-streamlit run dashboard.py
+# 9. Interface web (ver seção "Interface web" abaixo)
+uvicorn backend.main:app --reload
 ```
 
 ### Uso rápido (modelos já treinados)
@@ -168,10 +171,56 @@ print(results["probabilities"]["LEC"]["podium"]) # P(Leclerc top 3)
 
 ---
 
+## Interface web
+
+Backend FastAPI (`backend/`) + frontend React/Vite (`frontend/`), com 5 páginas:
+
+| Página | Rota | O que faz |
+|--------|------|-----------|
+| 🔴 Ao Vivo | `/` | Replay real de uma corrida já disputada (2022-2026, volta a volta) ou conexão ao live timing real da F1 (`fastf1.livetiming`, só recebe dados durante sessão real acontecendo). Clique num piloto abre a telemetria real (velocidade, freio, RPM, marcha, DRS) da volta atual. |
+| 🏁 Previsões | `/previsoes` | Simulação Monte Carlo interativa (escolhe GP + grid de largada). |
+| 🧠 Engenharia | `/engenharia` | Telemetria real por sessão (FP1-3/Q/R) e piloto, via FastF1. |
+| 📈 Modelo | `/analise` | Feature importance e RMSE por GP. |
+| 📊 Calibração | `/calibracao` | Reliability diagrams e Brier score contra 2024. |
+
+### Rodar localmente (dev)
+
+```bash
+# terminal 1 — backend (porta 8000)
+uvicorn backend.main:app --reload
+
+# terminal 2 — frontend (porta 5173, proxy /api -> :8000)
+cd frontend
+npm install
+npm run dev
+```
+
+### Rodar com Docker (backend + frontend)
+
+```bash
+docker compose up --build
+# backend:  http://localhost:8000
+# frontend: http://localhost:3000
+```
+
+`dashboard.py` (versão Streamlit anterior) ainda existe no repo por referência, mas não é mais mantido — a interface atual é a web acima.
+
+---
+
 ## Estrutura do projeto
 
 ```
 F1-AI-Assistent/
+├── backend/                            # API FastAPI
+│   ├── main.py                         # App + routers
+│   ├── fastf1_shared.py                # Cache/sessão/telemetria compartilhados
+│   ├── live_session.py                 # Conexão real ao live timing da F1
+│   └── routers/                        # reference, simulate, calibration,
+│                                        #  model_analysis, engineering, replay, live
+├── frontend/                           # SPA React + Vite + Tailwind
+│   └── src/
+│       ├── pages/                      # LiveRacePage, SimulationPage, EngineeringPage, ...
+│       └── components/                 # Sidebar, TelemetryPanel, gráficos (Recharts)
 ├── src/
 │   ├── data/
 │   │   └── make_dataset_v2.py          # Coleta FastF1 + weather + Ergast
@@ -212,7 +261,8 @@ F1-AI-Assistent/
 │   ├── raw/                            # CSVs brutos do FastF1
 │   └── processed/                      # CSVs processados
 ├── dvc.yaml / dvc.lock                 # Pipeline versionado com DVC
-├── dashboard.py                        # Streamlit dashboard
+├── docker-compose.yml                  # Serviços backend + frontend
+├── dashboard.py                        # Dashboard Streamlit anterior (legado)
 └── README.md
 ```
 

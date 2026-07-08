@@ -5,7 +5,7 @@ export function ReliabilityChart({ title, data }: { title: string; data: Reliabi
   const points = data.map((b) => ({ x: b.pred_mean, y: b.real_rate, n: b.n }));
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+    <div className="card p-4">
       <h4 className="font-semibold mb-2">{title}</h4>
       <ResponsiveContainer width="100%" height={280}>
         <ComposedChart margin={{ top: 10, right: 10, left: 0, bottom: 0 }}>

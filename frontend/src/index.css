@@ -1,5 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 @import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0a0f;
+  --color-surface: #12121a;
+  --color-surface-2: #16161f;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-accent: #e10600;
+  --color-accent-dim: #8a0400;
+  --color-text: #f4f4f6;
+  --color-text-muted: #9a9aa5;
+  --color-text-faint: #6a6a76;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
 
 :root {
   color-scheme: dark;
@@ -7,9 +21,10 @@
 
 body {
   margin: 0;
-  font-family: 'Inter', system-ui, sans-serif;
-  background: #0d0d14;
-  color: #f4f4f6;
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-feature-settings: 'tnum' 1;
 }
 
 ::-webkit-scrollbar {
@@ -19,4 +34,52 @@ body {
 ::-webkit-scrollbar-thumb {
   background: #2e2e3a;
   border-radius: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;
+}
+
+.control {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0.5rem;
+  padding: 0.55rem 0.7rem;
+  color: var(--color-text);
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.control:focus {
+  border-color: rgba(225, 6, 0, 0.65);
+}
+
+.tiny-btn {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.4rem;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-muted);
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.tiny-btn.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+tbody tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.015);
 }

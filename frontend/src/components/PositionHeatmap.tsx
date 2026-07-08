@@ -29,7 +29,7 @@ function cellColor(pct: number) {
 
 export function PositionHeatmap({ drivers, positions, matrix }: Props) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+    <div className="card p-4">
       <h3 className="text-lg font-bold mb-3">🚦 Distribuição de Posição Final (%)</h3>
       <div className="overflow-x-auto">
         <table className="border-collapse text-xs w-full">

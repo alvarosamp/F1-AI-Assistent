@@ -55,7 +55,7 @@ export function CalibrationPage() {
       </div>
 
       <h3 className="text-xl font-bold mb-3">Métricas Detalhadas</h3>
-      <div className="rounded-2xl border border-white/10 bg-white/5 p-4 overflow-x-auto mb-6">
+      <div className="card p-4 overflow-x-auto mb-6">
         <table className="w-full text-sm">
           <thead>
             <tr className="text-left text-gray-400 border-b border-white/10">
