@@ -8,11 +8,15 @@ SIGNAL_COLUMNS = [
     "Speed",
     "Throttle",
     "Brake",
+    "brake_pressure_proxy",
     "RPM",
     "nGear",
     "DRS",
+    "DistanceToDriverAhead",
+    "dirty_air_score",
     "steering_proxy",
     "lateral_change",
+    "accel_proxy",
 ]
 
 
@@ -42,6 +46,7 @@ def add_derived_signals(telemetry: pd.DataFrame) -> pd.DataFrame:
 
     if "Brake" in df.columns:
         df["Brake"] = df["Brake"].astype(int)
+        df["brake_pressure_proxy"] = df["Brake"] * 100
 
     if "Throttle" in df.columns:
         df["Throttle"] = pd.to_numeric(df["Throttle"], errors="coerce").fillna(0)
@@ -49,6 +54,15 @@ def add_derived_signals(telemetry: pd.DataFrame) -> pd.DataFrame:
     if "Speed" in df.columns:
         df["Speed"] = pd.to_numeric(df["Speed"], errors="coerce").ffill()
         df["accel_proxy"] = df["Speed"].diff().fillna(0.0)
+
+    if "DistanceToDriverAhead" in df.columns:
+        distance = pd.to_numeric(df["DistanceToDriverAhead"], errors="coerce")
+        distance = distance.replace([np.inf, -np.inf], np.nan).ffill().bfill()
+        df["DistanceToDriverAhead"] = distance
+        df["dirty_air_score"] = ((120.0 - distance) / 120.0).clip(lower=0.0, upper=1.0)
+    else:
+        df["DistanceToDriverAhead"] = np.nan
+        df["dirty_air_score"] = 0.0
 
     return df
 
@@ -69,6 +83,10 @@ def summarize_lap_signals(telemetry: pd.DataFrame) -> dict[str, float]:
 
     if "Brake" in df:
         summary["brake_pct"] = float((df["Brake"] > 0).mean() * 100)
+
+    if "DistanceToDriverAhead" in df and df["DistanceToDriverAhead"].notna().any():
+        summary["avg_distance_to_car_ahead"] = float(df["DistanceToDriverAhead"].mean())
+        summary["dirty_air_pct"] = float((df["dirty_air_score"] > 0.25).mean() * 100)
 
     if "DRS" in df:
         summary["drs_pct"] = float((df["DRS"] > 0).mean() * 100)

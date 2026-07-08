@@ -69,7 +69,7 @@ def build_figure(telemetry, title: str) -> go.Figure:
         ) from exc
 
     fig = make_subplots(
-        rows=7,
+        rows=10,
         cols=1,
         shared_xaxes=True,
         vertical_spacing=0.025,
@@ -77,10 +77,13 @@ def build_figure(telemetry, title: str) -> go.Figure:
             "Speed",
             "Throttle",
             "Brake",
+            "Brake pressure proxy",
             "RPM",
             "Gear",
             "DRS",
             "Steering proxy / lateral direction",
+            "Distance to driver ahead",
+            "Dirty air score",
         ],
     )
 
@@ -89,10 +92,13 @@ def build_figure(telemetry, title: str) -> go.Figure:
         ("Speed", "Speed", "km/h", "#e10600"),
         ("Throttle", "Throttle", "%", "#1f77b4"),
         ("Brake", "Brake", "on/off", "#ff7f0e"),
+        ("brake_pressure_proxy", "Brake pressure proxy", "%", "#ff2b2b"),
         ("RPM", "RPM", "rpm", "#2ca02c"),
         ("nGear", "Gear", "gear", "#9467bd"),
         ("DRS", "DRS", "mode", "#17becf"),
         ("lateral_change", "Steering proxy", "proxy", "#d62728"),
+        ("DistanceToDriverAhead", "Distance to driver ahead", "m", "#f5c542"),
+        ("dirty_air_score", "Dirty air score", "0-1", "#ffffff"),
     ]
 
     for row_idx, (column, name, unit, color) in enumerate(traces, start=1):
@@ -111,10 +117,10 @@ def build_figure(telemetry, title: str) -> go.Figure:
         )
         fig.update_yaxes(title_text=unit, row=row_idx, col=1)
 
-    fig.update_xaxes(title_text="Distance (m)", row=7, col=1)
+    fig.update_xaxes(title_text="Distance (m)", row=10, col=1)
     fig.update_layout(
         title=title,
-        height=1150,
+        height=1500,
         template="plotly_dark",
         showlegend=False,
         margin=dict(l=70, r=30, t=80, b=40),

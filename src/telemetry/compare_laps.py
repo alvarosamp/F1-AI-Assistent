@@ -47,7 +47,7 @@ def load_session(year: int, gp: str, session_name: str, cache: Path):
 
 
 def pick_lap(session, driver: str, lap_number: int | None):
-    laps = session.laps.pick_driver(driver.upper())
+    laps = session.laps.pick_drivers(driver.upper())
     if laps.empty:
         raise ValueError(f"No laps found for driver {driver}.")
     if lap_number is None:
@@ -81,7 +81,19 @@ def build_comparison_frame(tel_a: pd.DataFrame, tel_b: pd.DataFrame) -> pd.DataF
     distance = np.linspace(0, max_distance, 600)
     frame = pd.DataFrame({"Distance": distance})
 
-    for column in ["Speed", "Throttle", "Brake", "RPM", "nGear", "DRS", "lateral_change", "lap_seconds"]:
+    for column in [
+        "Speed",
+        "Throttle",
+        "Brake",
+        "brake_pressure_proxy",
+        "RPM",
+        "nGear",
+        "DRS",
+        "lateral_change",
+        "DistanceToDriverAhead",
+        "dirty_air_score",
+        "lap_seconds",
+    ]:
         frame[f"{column}_a"] = interpolate_on_distance(tel_a, distance, column)
         frame[f"{column}_b"] = interpolate_on_distance(tel_b, distance, column)
 
@@ -102,7 +114,7 @@ def build_figure(frame: pd.DataFrame, driver_a: str, driver_b: str, title: str):
         ) from exc
 
     fig = make_subplots(
-        rows=8,
+        rows=11,
         cols=1,
         shared_xaxes=True,
         vertical_spacing=0.02,
@@ -111,10 +123,13 @@ def build_figure(frame: pd.DataFrame, driver_a: str, driver_b: str, title: str):
             "Speed delta",
             "Throttle",
             "Brake",
+            "Brake pressure proxy",
             "RPM",
             "Gear",
             "DRS",
             "Steering proxy / lateral direction",
+            "Distance to driver ahead",
+            "Dirty air score",
         ],
     )
 
@@ -124,10 +139,13 @@ def build_figure(frame: pd.DataFrame, driver_a: str, driver_b: str, title: str):
         ("speed_delta", "km/h"),
         ("Throttle", "%"),
         ("Brake", "on/off"),
+        ("brake_pressure_proxy", "%"),
         ("RPM", "rpm"),
         ("nGear", "gear"),
         ("DRS", "mode"),
         ("lateral_change", "proxy"),
+        ("DistanceToDriverAhead", "m"),
+        ("dirty_air_score", "0-1"),
     ]
 
     for row_idx, (column, unit) in enumerate(row_specs, start=1):
@@ -150,10 +168,10 @@ def build_figure(frame: pd.DataFrame, driver_a: str, driver_b: str, title: str):
             )
         fig.update_yaxes(title_text=unit, row=row_idx, col=1)
 
-    fig.update_xaxes(title_text="Distance (m)", row=8, col=1)
+    fig.update_xaxes(title_text="Distance (m)", row=11, col=1)
     fig.update_layout(
         title=title,
-        height=1350,
+        height=1800,
         template="plotly_dark",
         legend=dict(orientation="h", yanchor="bottom", y=1.01, xanchor="right", x=1),
         margin=dict(l=70, r=30, t=90, b=40),
@@ -175,7 +193,17 @@ def print_summary(driver_a: str, driver_b: str, lap_a, lap_b, tel_a: pd.DataFram
     print(f"Faster: {faster} by {gap:.3f}s")
     print()
     print("Signal differences:")
-    for key in ["max_speed", "avg_speed", "avg_throttle", "full_throttle_pct", "brake_pct", "avg_gear", "cornering_intensity"]:
+    for key in [
+        "max_speed",
+        "avg_speed",
+        "avg_throttle",
+        "full_throttle_pct",
+        "brake_pct",
+        "dirty_air_pct",
+        "avg_distance_to_car_ahead",
+        "avg_gear",
+        "cornering_intensity",
+    ]:
         if key in summary_a and key in summary_b:
             print(f"{key}: {driver_a}={summary_a[key]:.3f} | {driver_b}={summary_b[key]:.3f} | delta={summary_a[key]-summary_b[key]:+.3f}")
 
