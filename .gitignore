@@ -7,3 +7,4 @@ __pycache__/
 *.py[cod]
 .pytest_cache/
 outputs/race_week/
+data/cache/fastf1_http_cache.sqlite
