@@ -1,0 +1,57 @@
+[
+  {
+    "market": "win",
+    "n": 478,
+    "current_brier": 0.0352075,
+    "baseline_brier": 0.0352075,
+    "current_ece": 0.0105418410041841,
+    "baseline_ece": 0.0105418410041841,
+    "pred_mean": 0.0502092050209205,
+    "real_rate": 0.0502092050209205,
+    "status": "OK"
+  },
+  {
+    "market": "podium",
+    "n": 478,
+    "current_brier": 0.08100652405857742,
+    "baseline_brier": 0.08100652405857742,
+    "current_ece": 0.059832635983263584,
+    "baseline_ece": 0.059832635983263584,
+    "pred_mean": 0.1506276150627615,
+    "real_rate": 0.1506276150627615,
+    "status": "OK"
+  },
+  {
+    "market": "top6",
+    "n": 478,
+    "current_brier": 0.07711928138075314,
+    "baseline_brier": 0.07711928138075314,
+    "current_ece": 0.03435355648535568,
+    "baseline_ece": 0.03435355648535568,
+    "pred_mean": 0.301255230125523,
+    "real_rate": 0.301255230125523,
+    "status": "OK"
+  },
+  {
+    "market": "top10",
+    "n": 478,
+    "current_brier": 0.1153702081589958,
+    "baseline_brier": 0.1153702081589958,
+    "current_ece": 0.07175104602510464,
+    "baseline_ece": 0.07175104602510465,
+    "pred_mean": 0.502092050209205,
+    "real_rate": 0.502092050209205,
+    "status": "OK"
+  },
+  {
+    "market": "dnf",
+    "n": 478,
+    "current_brier": 0.08743376359832637,
+    "baseline_brier": 0.08743376359832637,
+    "current_ece": 0.012077405857740586,
+    "baseline_ece": 0.012077405857740586,
+    "pred_mean": 0.0862489539748954,
+    "real_rate": 0.09832635983263599,
+    "status": "OK"
+  }
+]

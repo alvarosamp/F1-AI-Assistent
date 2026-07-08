@@ -1,10 +1,12 @@
 services:
-  dashboard:
-    build: .
-    image: f1-ai-assistent:latest
-    container_name: f1-dashboard
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    image: f1-ai-backend:latest
+    container_name: f1-backend
     ports:
-      - "8501:8501"
+      - "8000:8000"
     volumes:
       - ./data:/app/data
       - ./models:/app/models
@@ -12,4 +14,17 @@ services:
       - ./outputs:/app/outputs
     environment:
       - PYTHONUNBUFFERED=1
+      - CORS_ORIGINS=http://localhost:3000
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    image: f1-ai-frontend:latest
+    container_name: f1-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
     restart: unless-stopped

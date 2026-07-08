@@ -40,38 +40,69 @@ st.set_page_config(
 # CSS customizado
 st.markdown("""
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+    
+    html, body, [class*="css"]  {
+        font-family: 'Inter', sans-serif;
+    }
     .main-header {
-        font-size: 2.5em;
+        font-size: 2.8em;
         font-weight: 800;
         color: #E10600;
         margin-bottom: 0;
+        text-transform: uppercase;
+        letter-spacing: -1px;
     }
     .sub-header {
-        font-size: 1.1em;
-        color: #666;
-        margin-top: -10px;
+        font-size: 1.2em;
+        color: #A0A0A0;
+        margin-top: -5px;
+        margin-bottom: 25px;
+        font-weight: 300;
     }
     .metric-card {
-        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        padding: 20px;
-        border-radius: 12px;
+        background: rgba(26, 26, 46, 0.6);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        padding: 24px;
+        border-radius: 16px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         color: white;
         text-align: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .metric-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        border: 1px solid rgba(225, 6, 0, 0.4);
     }
     .metric-value {
-        font-size: 2em;
-        font-weight: 700;
+        font-size: 2.2em;
+        font-weight: 800;
+        margin: 10px 0;
+        background: linear-gradient(90deg, #ffffff, #aaaaaa);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
     .metric-label {
-        font-size: 0.85em;
-        opacity: 0.7;
+        font-size: 0.9em;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        color: #888;
     }
     .stTabs [data-baseweb="tab-list"] {
-        gap: 8px;
+        gap: 12px;
     }
     .stTabs [data-baseweb="tab"] {
-        padding: 10px 20px;
+        padding: 12px 24px;
         font-weight: 600;
+        border-radius: 8px 8px 0 0;
+    }
+    [data-testid="stDataFrame"] {
+        border-radius: 12px;
+        overflow: hidden;
+        border: 1px solid rgba(255,255,255,0.1);
     }
 </style>
 """, unsafe_allow_html=True)
@@ -93,6 +124,21 @@ KNOWN_DRIVERS = {
     "MAG": "Haas F1 Team", "HUL": "Haas F1 Team",
     "ALB": "Williams", "SAR": "Williams", "COL": "Williams",
     "BEA": "Ferrari",
+}
+
+TEAM_COLORS = {
+    "Red Bull Racing": "#3671C6",
+    "Ferrari": "#E80020",
+    "McLaren": "#FF8000",
+    "Mercedes": "#27F4D2",
+    "Aston Martin": "#229971",
+    "Alpine": "#0090FF",
+    "RB": "#6692FF",
+    "Kick Sauber": "#52E252",
+    "Haas F1 Team": "#FFFFFF",
+    "Williams": "#64C4FF",
+    "?": "#666666",
+    "Unknown": "#666666"
 }
 
 KNOWN_GPS = [
@@ -168,23 +214,24 @@ def make_reliability_chart(rel_data: list[dict], title: str) -> go.Figure:
 st.sidebar.markdown("# 🏎️ F1 AI Insights")
 page = st.sidebar.radio(
     "Navegação",
-    ["Simulação de Corrida", "Calibração", "Análise do Modelo", "Sobre o Projeto"],
+    ["🏁 Simulação de Corrida", "📊 Calibração", "🧠 Análise do Modelo", "ℹ️ Sobre o Projeto"],
 )
 
 
 # ============================================================
 # PAGE 1: SIMULAÇÃO
 # ============================================================
-if page == "Simulação de Corrida":
+if page == "🏁 Simulação de Corrida":
     st.markdown('<p class="main-header">Simulação Monte Carlo</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Selecione o GP e o grid de largada para simular a corrida</p>', unsafe_allow_html=True)
 
-    col1, col2 = st.columns([1, 2])
+    col1, col2 = st.columns([1, 2.5])
 
     with col1:
+        st.markdown("### ⚙️ Parâmetros")
         selected_gp = st.selectbox("Grand Prix", KNOWN_GPS, index=0)
         total_laps = GP_LAPS.get(selected_gp, 55)
-        st.caption(f"Voltas: {total_laps}")
+        st.caption(f"🏁 Voltas: {total_laps}")
 
         n_sims = st.select_slider(
             "Simulações",
@@ -193,18 +240,19 @@ if page == "Simulação de Corrida":
         )
         st.caption(f"Mais simulações = mais preciso, mais lento (~{n_sims/880:.0f}s)")
 
-        st.markdown("### Grid de Largada")
-        st.caption("Selecione os pilotos na ordem de largada")
+        st.markdown("---")
+        st.markdown("### 🏎️ Grid de Largada")
 
         all_drivers = sorted(KNOWN_DRIVERS.keys())
         default_grid = ["VER", "SAI", "LEC", "NOR", "PIA", "RUS", "HAM", "ALO", "STR", "PER"]
         selected_drivers = st.multiselect(
-            "Pilotos (ordem = posição de largada)",
+            "Pilotos (ordem = largada)",
             options=all_drivers,
             default=default_grid,
             max_selections=20,
         )
 
+        st.markdown("<br>", unsafe_allow_html=True)
         run_sim = st.button("🏁 Simular Corrida", type="primary", use_container_width=True)
 
     with col2:
@@ -253,17 +301,26 @@ if page == "Simulação de Corrida":
                 [(drv, probs[drv]["win"]) for drv in probs],
                 key=lambda x: -x[1],
             )
+            bar_colors = [TEAM_COLORS.get(KNOWN_DRIVERS.get(d[0], "Unknown"), "#666666") for d in win_data]
+            
             fig = go.Figure(go.Bar(
                 x=[d[0] for d in win_data],
                 y=[d[1] * 100 for d in win_data],
-                marker_color=["#E10600" if i == 0 else "#333" for i in range(len(win_data))],
-                text=[f"{d[1]*100:.1f}%" for d in win_data],
+                marker_color=bar_colors,
+                text=[f"{d[1]*100:.1f}%" if d[1] > 0.01 else "" for d in win_data],
                 textposition="outside",
+                textfont=dict(family="Inter", size=13, color="white"),
+                hovertemplate="<b>%{x}</b><br>Vitória: %{y:.1f}%<extra></extra>",
             ))
             fig.update_layout(
-                title="Probabilidade de Vitória",
-                yaxis_title="%", height=400,
+                title=dict(text="🏆 Probabilidade de Vitória", font=dict(family="Inter", size=22, color="white")),
+                yaxis_title="%", height=420,
                 template="plotly_dark",
+                margin=dict(l=20, r=20, t=60, b=20),
+                plot_bgcolor="rgba(0,0,0,0)",
+                paper_bgcolor="rgba(0,0,0,0)",
+                yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.1)", zeroline=False),
+                xaxis=dict(showgrid=False),
             )
             st.plotly_chart(fig, use_container_width=True)
 
@@ -280,14 +337,18 @@ if page == "Simulação de Corrida":
                     z=position_data,
                     x=[f"P{i}" for i in range(1, len(selected_drivers) + 1)],
                     y=selected_drivers[:10],
-                    colorscale="RdYlGn_r",
-                    text=[[f"{v:.1f}%" for v in row] for row in position_data],
+                    colorscale="Plasma",
+                    text=[[f"{v:.1f}%" if v > 0.1 else "" for v in row] for row in position_data],
                     texttemplate="%{text}",
-                    textfont={"size": 10},
+                    textfont={"size": 11, "family": "Inter"},
+                    hoverongaps=False,
                 ))
                 fig2.update_layout(
-                    title="Distribuição de Posição Final (%)",
-                    height=400, template="plotly_dark",
+                    title=dict(text="🚦 Distribuição de Posição Final (%)", font=dict(family="Inter", size=20, color="white")),
+                    height=420, template="plotly_dark",
+                    plot_bgcolor="rgba(0,0,0,0)",
+                    paper_bgcolor="rgba(0,0,0,0)",
+                    margin=dict(l=20, r=20, t=60, b=20),
                 )
                 st.plotly_chart(fig2, use_container_width=True)
 
@@ -300,7 +361,7 @@ if page == "Simulação de Corrida":
 # ============================================================
 # PAGE 2: CALIBRAÇÃO
 # ============================================================
-elif page == "Calibração":
+elif page == "📊 Calibração":
     st.markdown('<p class="main-header">Calibração do Modelo</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Validação contra todas as 24 corridas de 2024</p>', unsafe_allow_html=True)
 
@@ -375,7 +436,7 @@ elif page == "Calibração":
 # ============================================================
 # PAGE 3: ANÁLISE DO MODELO
 # ============================================================
-elif page == "Análise do Modelo":
+elif page == "🧠 Análise do Modelo":
     st.markdown('<p class="main-header">Análise do Modelo v3</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Feature importance, performance por GP e piloto</p>', unsafe_allow_html=True)
 
@@ -390,11 +451,19 @@ elif page == "Análise do Modelo":
             y=imp.head(20)["feature"].values[::-1],
             orientation="h",
             marker_color="#E10600",
+            text=[f"{val:.3f}" for val in imp.head(20)["importance"].values[::-1]],
+            textposition="outside",
+            textfont=dict(family="Inter", size=11, color="white"),
         ))
         fig.update_layout(
-            height=500, template="plotly_dark",
+            height=550, template="plotly_dark",
+            title=dict(text="📊 Feature Importance (Top 20)", font=dict(family="Inter", size=20, color="white")),
             xaxis_title="Importância",
-            margin=dict(l=200),
+            margin=dict(l=200, r=20, t=60, b=20),
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            xaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.1)", zeroline=False),
+            yaxis=dict(showgrid=False),
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -415,15 +484,27 @@ elif page == "Análise do Modelo":
     if diag_file.exists():
         diag = pd.read_csv(diag_file, index_col=0)
         st.markdown("### RMSE por Grand Prix")
+        
+        # Ordenar RMSE do maior (pior) para o menor (melhor)
+        diag_sorted = diag.sort_values(by="rmse", ascending=False)
 
         fig = go.Figure(go.Bar(
-            x=diag.index,
-            y=diag["rmse"],
-            marker_color="#E10600",
+            x=diag_sorted.index,
+            y=diag_sorted["rmse"],
+            marker_color="#3671C6",
+            text=[f"{val:.2f}s" for val in diag_sorted["rmse"]],
+            textposition="outside",
+            textfont=dict(family="Inter", size=11, color="white"),
         ))
         fig.update_layout(
-            height=400, template="plotly_dark",
+            height=450, template="plotly_dark",
+            title=dict(text="🌍 RMSE por Grand Prix (Ordenado)", font=dict(family="Inter", size=20, color="white")),
             xaxis_tickangle=-45, yaxis_title="RMSE (s)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            margin=dict(l=20, r=20, t=60, b=80),
+            yaxis=dict(showgrid=True, gridcolor="rgba(255,255,255,0.1)", zeroline=False),
+            xaxis=dict(showgrid=False),
         )
         st.plotly_chart(fig, use_container_width=True)
 
@@ -431,7 +512,7 @@ elif page == "Análise do Modelo":
 # ============================================================
 # PAGE 4: SOBRE O PROJETO
 # ============================================================
-elif page == "Sobre o Projeto":
+elif page == "ℹ️ Sobre o Projeto":
     st.markdown('<p class="main-header">F1 AI Race Insights</p>', unsafe_allow_html=True)
     st.markdown('<p class="sub-header">Sistema de decision support para corridas de Fórmula 1</p>', unsafe_allow_html=True)
 

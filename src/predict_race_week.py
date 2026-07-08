@@ -26,6 +26,12 @@ from betting_recommender import (
     load_odds,
     save_recommendations_csv,
 )
+from season_adaptation import (
+    REGULATION_PROFILES,
+    adapt_probabilities,
+    format_adaptation_summary,
+    load_current_form,
+)
 
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -75,6 +81,19 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42, help="Random seed for repeatable predictions.")
     parser.add_argument("--models-dir", type=Path, default=PROJECT_ROOT / "models", help="Model artifact directory.")
     parser.add_argument("--out-dir", type=Path, default=PROJECT_ROOT / "outputs" / "race_week", help="Output directory.")
+    parser.add_argument(
+        "--regulation-profile",
+        choices=sorted(REGULATION_PROFILES),
+        default="major_2026",
+        help="How aggressively to reduce stale historical confidence.",
+    )
+    parser.add_argument(
+        "--current-form",
+        type=Path,
+        default=PROJECT_ROOT / "configs" / "season_adaptation_2026.csv",
+        help="Optional CSV with current-season pace_delta adjustments.",
+    )
+    parser.add_argument("--no-season-adaptation", action="store_true", help="Use raw simulator probabilities only.")
     parser.add_argument("--odds", type=Path, default=None, help="Optional decimal odds CSV for bet recommendations.")
     parser.add_argument(
         "--calibration-report",
@@ -241,6 +260,17 @@ def main() -> int:
         verbose=not args.quiet,
     )
 
+    adaptation_text = ""
+    if not args.no_season_adaptation:
+        current_form = load_current_form(args.current_form) if args.current_form else {}
+        results, adaptation_diag = adapt_probabilities(
+            results=results,
+            grid=grid,
+            profile_name=args.regulation_profile,
+            current_form=current_form,
+        )
+        adaptation_text = format_adaptation_summary(adaptation_diag, args.regulation_profile)
+
     rows = probability_rows(results, grid)
     summary = build_friend_summary(args.gp, rows, results["sc_probability"])
 
@@ -251,7 +281,10 @@ def main() -> int:
     csv_path = args.out_dir / f"{safe_gp}_{run_id}.csv"
     txt_path = args.out_dir / f"{safe_gp}_{run_id}.txt"
     save_csv(csv_path, rows)
-    txt_path.write_text(summary + "\n", encoding="utf-8")
+    full_summary = summary
+    if adaptation_text:
+        full_summary += "\n\n" + adaptation_text
+    txt_path.write_text(full_summary + "\n", encoding="utf-8")
 
     if args.json:
         json_path = args.out_dir / f"{safe_gp}_{run_id}.json"
@@ -278,7 +311,7 @@ def main() -> int:
         print(f"Saved recommendation summary: {rec_txt_path}")
 
     print()
-    print(summary)
+    print(full_summary)
     print()
     print(f"Saved ranking: {csv_path}")
     print(f"Saved summary: {txt_path}")

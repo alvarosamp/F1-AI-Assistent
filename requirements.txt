@@ -1,3 +1,5 @@
+fastapi
+uvicorn[standard]
 fastf1
 joblib
 matplotlib
@@ -6,6 +8,6 @@ numpy
 optuna
 pandas
 plotly
-scikit-learn
+scikit-learn==1.8.0
 streamlit
 xgboost

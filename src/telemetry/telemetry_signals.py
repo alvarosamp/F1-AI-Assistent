@@ -32,8 +32,9 @@ def add_derived_signals(telemetry: pd.DataFrame) -> pd.DataFrame:
     if {"X", "Y"}.issubset(df.columns):
         dx = df["X"].astype(float).diff()
         dy = df["Y"].astype(float).diff()
-        heading = np.unwrap(np.arctan2(dy, dx))
-        df["steering_proxy"] = pd.Series(heading).diff().fillna(0.0)
+        raw_heading = pd.Series(np.arctan2(dy, dx), index=df.index).bfill().ffill().fillna(0.0)
+        heading = np.unwrap(raw_heading.to_numpy())
+        df["steering_proxy"] = pd.Series(heading, index=df.index).diff().fillna(0.0)
         df["lateral_change"] = df["steering_proxy"].rolling(5, min_periods=1).mean()
     else:
         df["steering_proxy"] = 0.0
@@ -79,4 +80,3 @@ def summarize_lap_signals(telemetry: pd.DataFrame) -> dict[str, float]:
         summary["cornering_intensity"] = float(df["steering_proxy"].abs().mean())
 
     return summary
-
