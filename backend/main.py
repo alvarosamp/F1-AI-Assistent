@@ -2,10 +2,20 @@ import os
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
+from backend.json_safe import sanitize_for_json
 from backend.routers import calibration, engineering, live, model_analysis, reference, replay, simulate
 
-app = FastAPI(title="F1 AI Race Insights API")
+
+class SafeJSONResponse(JSONResponse):
+    """JSONResponse that replaces NaN/Infinity floats with null instead of crashing."""
+
+    def render(self, content) -> bytes:
+        return super().render(sanitize_for_json(content))
+
+
+app = FastAPI(title="F1 AI Race Insights API", default_response_class=SafeJSONResponse)
 
 allowed_origins = os.environ.get(
     "CORS_ORIGINS", "http://localhost:5173,http://localhost:3000"

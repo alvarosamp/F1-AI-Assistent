@@ -164,6 +164,14 @@ export function SimulationPage() {
         <div className="space-y-6">
           {result && (
             <>
+              {result.season_adaptation && (
+                <p className="text-xs text-accent bg-accent/10 border border-accent/20 rounded-lg px-3 py-2">
+                  Ajuste de temporada aplicado (perfil <strong>{result.season_adaptation.profile}</strong>): o modelo
+                  base foi treinado com dados de 2022-2024 e o monitor de drift de 2026 aponta desvio relevante
+                  (regulamento novo). As probabilidades abaixo já incluem essa correção — reduz confiança histórica
+                  e dá mais peso ao ritmo/grid da temporada atual.
+                </p>
+              )}
               <div className="card p-4 overflow-x-auto">
                 <h3 className="text-lg font-bold mb-3">Resultados — {result.gp}</h3>
                 <table className="w-full text-sm">

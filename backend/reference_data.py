@@ -1,17 +1,17 @@
 """Dados de referência estáticos (pilotos, equipes, GPs) — antes hardcoded no dashboard.py."""
 
 KNOWN_DRIVERS = {
-    "VER": "Red Bull Racing", "PER": "Red Bull Racing",
-    "LEC": "Ferrari", "SAI": "Ferrari",
+    "VER": "Red Bull Racing", "HAD": "Red Bull Racing",
+    "LEC": "Ferrari", "HAM": "Ferrari",
     "NOR": "McLaren", "PIA": "McLaren",
-    "HAM": "Mercedes", "RUS": "Mercedes",
+    "RUS": "Mercedes", "ANT": "Mercedes",
     "ALO": "Aston Martin", "STR": "Aston Martin",
-    "GAS": "Alpine", "OCO": "Alpine",
-    "TSU": "RB", "RIC": "RB", "LAW": "RB",
-    "BOT": "Kick Sauber", "ZHO": "Kick Sauber",
-    "MAG": "Haas F1 Team", "HUL": "Haas F1 Team",
-    "ALB": "Williams", "SAR": "Williams", "COL": "Williams",
-    "BEA": "Ferrari",
+    "GAS": "Alpine", "COL": "Alpine",
+    "LAW": "Racing Bulls", "LIN": "Racing Bulls",
+    "BOT": "Cadillac", "PER": "Cadillac",
+    "HUL": "Audi", "BOR": "Audi",
+    "BEA": "Haas F1 Team", "OCO": "Haas F1 Team",
+    "ALB": "Williams", "SAI": "Williams",
 }
 
 TEAM_COLORS = {
@@ -21,9 +21,10 @@ TEAM_COLORS = {
     "Mercedes": "#27F4D2",
     "Aston Martin": "#229971",
     "Alpine": "#0090FF",
-    "RB": "#6692FF",
-    "Kick Sauber": "#52E252",
-    "Haas F1 Team": "#FFFFFF",
+    "Racing Bulls": "#6692FF",
+    "Cadillac": "#8A8D8F",
+    "Audi": "#BB0A30",
+    "Haas F1 Team": "#B6BABD",
     "Williams": "#64C4FF",
     "?": "#666666",
     "Unknown": "#666666",

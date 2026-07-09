@@ -15,12 +15,24 @@ export interface DriverProbabilities {
   [posKey: string]: number;
 }
 
+export interface SeasonAdaptation {
+  profile: string;
+  historical_weight: number;
+  pace_sensitivity: number;
+  recovery_boost: number;
+  favorite_shrink: number;
+  longshot_floor: number;
+  dnf_base_blend: number;
+}
+
 export interface SimulateResponse {
   gp: string;
   total_laps: number;
   n_simulations: number;
   sc_probability: number;
   probabilities: Record<string, DriverProbabilities>;
+  probabilities_raw: Record<string, DriverProbabilities> | null;
+  season_adaptation: SeasonAdaptation | null;
 }
 
 export interface ReliabilityBin {

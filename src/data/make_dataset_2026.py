@@ -57,6 +57,19 @@ def save_checkpoint(state: dict) -> None:
     with open(CHECKPOINT_FILE, "w", encoding="utf-8") as f:
         json.dump(state, f, indent=2)
 
+
+def mark_failed(state: dict, key: str) -> None:
+    """Adiciona ao checkpoint sem duplicar a cada rerun."""
+    if key not in state["failed"]:
+        state["failed"].append(key)
+    save_checkpoint(state)
+
+
+def load_event_dates(year: int) -> dict[str, pd.Timestamp]:
+    """EventDate por GP (load_schedule_cached não guarda datas, só nome+round)."""
+    full_schedule = with_retry(fastf1.get_event_schedule, f"schedule dates {year}", year, include_testing=False)
+    return dict(zip(full_schedule["EventName"], full_schedule["EventDate"]))
+
 ENGINEERING_COLUMNS = [
     "avg_distance_to_car_ahead",
     "dirty_air_pct",
@@ -154,10 +167,18 @@ def main() -> None:
 
     schedule = load_schedule_cached(YEAR)
     schedule = schedule[schedule["RoundNumber"] > 0]
+    event_dates = load_event_dates(YEAR)
+    today = pd.Timestamp.now().normalize()
 
     for _, event in schedule.iterrows():
         gp = event["EventName"]
         round_number = int(event.get("RoundNumber", 0))
+
+        event_date = event_dates.get(gp)
+        if event_date is not None and pd.notna(event_date) and (event_date - pd.Timedelta(days=3)) > today:
+            print(f"[wait] {gp}: fim de semana ainda não aconteceu (evento em {event_date.date()}) — não conta como falha")
+            continue
+
         for code in SESSION_CODES:
             key = session_key(gp, code)
             if key in completed:
@@ -169,17 +190,17 @@ def main() -> None:
             except Exception:
                 print(f"  [FAIL TOTAL] {key}")
                 traceback.print_exc()
-                state["failed"].append(key)
-                save_checkpoint(state)
+                mark_failed(state, key)
                 continue
             if len(df) == 0:
                 print(f"  [SKIP] {gp} {code}: 0 linhas (corrida ainda não disputada?)")
-                state["failed"].append(key)
-                save_checkpoint(state)
+                mark_failed(state, key)
                 continue
             df_all = pd.concat([df_all, df], ignore_index=True)
             df_all.to_csv(PARTIAL_FILE, index=False)
             state["completed"].append(key)
+            if key in state["failed"]:
+                state["failed"].remove(key)
             save_checkpoint(state)
             print(f"  [OK] {gp} {code}: {len(df)} linhas | parcial total: {len(df_all)}")
 
