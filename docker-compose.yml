@@ -12,6 +12,7 @@ services:
       - ./models:/app/models
       - ./mlruns:/app/mlruns
       - ./outputs:/app/outputs
+      - huggingface_cache:/root/.cache/huggingface
     environment:
       - PYTHONUNBUFFERED=1
       - CORS_ORIGINS=http://localhost:3000
@@ -28,3 +29,6 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
+
+volumes:
+  huggingface_cache:

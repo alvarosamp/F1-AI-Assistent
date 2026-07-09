@@ -179,9 +179,21 @@ Backend FastAPI (`backend/`) + frontend React/Vite (`frontend/`), com 5 páginas
 |--------|------|-----------|
 | 🔴 Ao Vivo | `/` | Replay real de uma corrida já disputada (2022-2026, volta a volta) ou conexão ao live timing real da F1 (`fastf1.livetiming`, só recebe dados durante sessão real acontecendo). Clique num piloto abre a telemetria real (velocidade, freio, RPM, marcha, DRS) da volta atual. |
 | 🏁 Previsões | `/previsoes` | Simulação Monte Carlo interativa (escolhe GP + grid de largada). |
-| 🧠 Engenharia | `/engenharia` | Telemetria real por sessão (FP1-3/Q/R) e piloto, via FastF1. |
+| 🧠 Engenharia | `/engenharia` | Telemetria real por sessão (FP1-3/Q/R) e piloto, via FastF1 — inclui o **Engenheiro de Corrida (IA local)**, ver abaixo. |
 | 📈 Modelo | `/analise` | Feature importance e RMSE por GP. |
 | 📊 Calibração | `/calibracao` | Reliability diagrams e Brier score contra 2024. |
+
+### Engenheiro de Corrida (IA local)
+
+Dentro da página **Engenharia**, ao selecionar um piloto ("Piloto A") aparece o painel **Engenheiro de Corrida**, com três análises calculadas a partir de dados reais da sessão (sem depender de nenhuma API externa):
+
+1. **Volta ideal** (`backend/ideal_lap.py`) — soma os melhores tempos de Setor 1/2/3 do piloto na sessão (podem ter sido cravados em voltas diferentes) e compara com a melhor volta real, mostrando o quanto ficou "na mesa".
+2. **Piloto da frente** (`backend/race_engineer.py: find_driver_ahead`) — identifica quem está imediatamente à frente na pista (por posição real da corrida, não por telemetria instantânea) e reaproveita a comparação de telemetria já existente (`/api/engineering/compare`) para mostrar onde um está ganhando/perdendo tempo em relação ao outro.
+3. **Recomendação de estratégia** (`backend/race_engineer.py: recommend_strategy`) — usa os modelos já treinados (`models/pit_model.pkl` para probabilidade de pit stop, `models/tyre_deg_model.pkl` para tendência de degradação do composto atual) e devolve uma recomendação: `pit_now` / `pit_soon` / `stay_out`.
+
+Essas três análises são **determinísticas** (sem LLM) e sempre disponíveis. O botão **"Pedir briefing da IA"** vai além: gera um texto em linguagem natural, estilo rádio de F1, combinando os três resultados acima — rodando **localmente** via [HuggingFace `transformers`](https://huggingface.co/docs/transformers) (modelo padrão `Qwen/Qwen2.5-1.5B-Instruct`, trocável pela env var `HF_MODEL_ID`), sem chamada a nenhuma API paga. Se o modelo não estiver disponível/carregado (ex: primeira execução ainda baixando os pesos, ou sem `torch`/`transformers` instalado), o briefing cai automaticamente para um resumo determinístico gerado a partir dos mesmos números — a UI avisa quando isso acontece.
+
+> Primeira chamada ao briefing baixa os pesos do modelo do HuggingFace Hub (alguns GB) e pode demorar; chamadas seguintes usam o modelo já carregado em memória no processo do backend.
 
 ### Rodar localmente (dev)
 
@@ -215,8 +227,10 @@ F1-AI-Assistent/
 │   ├── main.py                         # App + routers
 │   ├── fastf1_shared.py                # Cache/sessão/telemetria compartilhados
 │   ├── live_session.py                 # Conexão real ao live timing da F1
+│   ├── ideal_lap.py                    # Volta ideal por soma de melhores setores
+│   ├── race_engineer.py                # Piloto da frente, estratégia pit/pneu, briefing IA local (HuggingFace)
 │   └── routers/                        # reference, simulate, calibration,
-│                                        #  model_analysis, engineering, replay, live
+│                                        #  model_analysis, engineering, replay, live, race_engineer
 ├── frontend/                           # SPA React + Vite + Tailwind
 │   └── src/
 │       ├── pages/                      # LiveRacePage, SimulationPage, EngineeringPage, ...

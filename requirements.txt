@@ -8,6 +8,9 @@ numpy
 optuna
 pandas
 plotly
+requests
 scikit-learn==1.8.0
 streamlit
+torch
+transformers
 xgboost

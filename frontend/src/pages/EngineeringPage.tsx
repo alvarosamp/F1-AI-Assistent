@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { PageHeader } from '../components/PageHeader';
 import { TelemetryPanel } from '../components/TelemetryPanel';
+import { RaceEngineerPanel } from '../components/RaceEngineerPanel';
 import {
   fetchEngineeringComparison,
   fetchEngineeringDrift,
@@ -218,6 +219,10 @@ export function EngineeringPage() {
             <DriftCard drift={drift} />
           </div>
         </section>
+      )}
+
+      {summary && selectedDriver && year != null && (
+        <RaceEngineerPanel year={year} gp={gp} session={sessionCode} driver={selectedDriver} lap={selectedLap} />
       )}
 
       {error && <div className="card p-4 text-yellow-400 text-sm">{error}</div>}

@@ -6,6 +6,13 @@ import { fetchReference, runSimulation, type ReferenceData, type SimulateRespons
 
 const N_SIM_OPTIONS = [100, 500, 1000, 2000, 5000, 10000];
 const DEFAULT_GRID = ['VER', 'SAI', 'LEC', 'NOR', 'PIA', 'RUS', 'HAM', 'ALO', 'STR', 'PER'];
+const SESSION_LABELS: Record<string, string> = {
+  FP1: 'Treino Livre 1',
+  FP2: 'Treino Livre 2',
+  FP3: 'Treino Livre 3',
+  Q: 'Classificação',
+  R: 'Corrida',
+};
 
 export function SimulationPage() {
   const [ref, setRef] = useState<ReferenceData | null>(null);
@@ -170,6 +177,15 @@ export function SimulationPage() {
                   base foi treinado com dados de 2022-2024 e o monitor de drift de 2026 aponta desvio relevante
                   (regulamento novo). As probabilidades abaixo já incluem essa correção — reduz confiança histórica
                   e dá mais peso ao ritmo/grid da temporada atual.
+                  {result.current_form_source ? (
+                    <>
+                      {' '}A forma atual usada veio do ritmo real de{' '}
+                      <strong>{SESSION_LABELS[result.current_form_source.session] ?? result.current_form_source.session}</strong>{' '}
+                      deste fim de semana ({result.current_form_source.n_drivers} pilotos com volta cronometrada).
+                    </>
+                  ) : (
+                    ' Ainda não há treino/quali real deste fim de semana disponível, então a forma atual usa estimativas manuais (configs/season_adaptation_2026.csv).'
+                  )}
                 </p>
               )}
               <div className="card p-4 overflow-x-auto">

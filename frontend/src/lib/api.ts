@@ -25,6 +25,13 @@ export interface SeasonAdaptation {
   dnf_base_blend: number;
 }
 
+export interface CurrentFormSource {
+  session: string;
+  year: number;
+  n_drivers: number;
+  used_static_fallback_for: string[];
+}
+
 export interface SimulateResponse {
   gp: string;
   total_laps: number;
@@ -33,6 +40,7 @@ export interface SimulateResponse {
   probabilities: Record<string, DriverProbabilities>;
   probabilities_raw: Record<string, DriverProbabilities> | null;
   season_adaptation: SeasonAdaptation | null;
+  current_form_source: CurrentFormSource | null;
 }
 
 export interface ReliabilityBin {
@@ -333,4 +341,81 @@ export function fetchLiveState() {
 
 export function fetchLiveTelemetry(driver: string) {
   return getJSON<DriverTelemetry>(`/live/telemetry/${driver}`);
+}
+
+// ---- Engenheiro de corrida (IA local) ----
+
+export interface IdealLapSector {
+  sector: number;
+  time_s: number;
+  lap_number: number;
+}
+
+export interface IdealLap {
+  available: boolean;
+  driver: string;
+  reason?: string;
+  ideal_lap_s?: number;
+  actual_best_lap_s?: number | null;
+  actual_best_lap_number?: number | null;
+  gap_to_ideal_s?: number | null;
+  sectors?: IdealLapSector[];
+}
+
+export interface DriverAhead {
+  driver_ahead: string | null;
+  position: number;
+  is_leader: boolean;
+  gap_s?: number | null;
+}
+
+export interface StrategyRecommendation {
+  driver: string;
+  lap_number: number;
+  compound: string | null;
+  tyre_life: number;
+  lap_time_mean_3_s: number | null;
+  lap_time_delta_s: number | null;
+  pit_probability: number | null;
+  pace_trend_s_per_lap: number | null;
+  recommended_action: 'pit_now' | 'pit_soon' | 'stay_out';
+}
+
+export interface RaceEngineerComparison {
+  driver_ahead: string;
+  comparison_samples: ComparisonSample[];
+  analysis: EngineeringAnalysis;
+}
+
+export interface RaceEngineerAnalysis {
+  year: number;
+  gp: string;
+  session: string;
+  driver: string;
+  lap_number: number;
+  ideal_lap: IdealLap;
+  ahead: DriverAhead | null;
+  strategy: StrategyRecommendation;
+  comparison_vs_ahead: RaceEngineerComparison | null;
+}
+
+export interface RaceEngineerBriefing {
+  mode: 'huggingface' | 'deterministic_fallback';
+  model: string | null;
+  text: string;
+  error?: string;
+}
+
+export interface RaceEngineerBriefingResponse extends RaceEngineerAnalysis {
+  briefing: RaceEngineerBriefing;
+}
+
+export function fetchRaceEngineerAnalysis(year: number, gp: string, session: string, driver: string, lap?: number) {
+  const q = new URLSearchParams({ year: String(year), gp, session, driver });
+  if (lap != null) q.set('lap', String(lap));
+  return getJSON<RaceEngineerAnalysis>(`/race-engineer/analysis?${q}`);
+}
+
+export function fetchRaceEngineerBriefing(params: { year: number; gp: string; session: string; driver: string; lap?: number | null }) {
+  return postJSON<RaceEngineerBriefingResponse>('/race-engineer/briefing', params);
 }

@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 from backend.json_safe import sanitize_for_json
-from backend.routers import calibration, engineering, live, model_analysis, reference, replay, simulate
+from backend.routers import calibration, engineering, live, model_analysis, race_engineer, reference, replay, simulate
 
 
 class SafeJSONResponse(JSONResponse):
@@ -35,6 +35,7 @@ app.include_router(model_analysis.router)
 app.include_router(engineering.router)
 app.include_router(replay.router)
 app.include_router(live.router)
+app.include_router(race_engineer.router)
 
 
 @app.get("/api/health")
