@@ -1,0 +1,23 @@
+{
+  "gp": "Bahrain Grand Prix",
+  "total_laps": 57,
+  "n_simulations": 2000,
+  "sc_probability": 0.38,
+  "probabilities": {
+    "VER": { "DNF": 0.06, "win": 0.28, "podium": 0.55, "top6": 0.8, "top10": 0.92, "points": 0.89, "P1": 28, "P2": 15, "P3": 12 },
+    "SAI": { "DNF": 0.07, "win": 0.08, "podium": 0.22, "top6": 0.5, "top10": 0.75, "points": 0.7, "P1": 8, "P2": 9, "P3": 10 }
+  },
+  "probabilities_raw": {
+    "VER": { "DNF": 0.06, "win": 0.35, "podium": 0.6, "top6": 0.82, "top10": 0.94, "points": 0.91, "P1": 35, "P2": 13, "P3": 11 },
+    "SAI": { "DNF": 0.07, "win": 0.04, "podium": 0.15, "top6": 0.4, "top10": 0.68, "points": 0.62, "P1": 4, "P2": 7, "P3": 9 }
+  },
+  "season_adaptation": {
+    "profile": "regulation_shift_2026",
+    "historical_weight": 0.4,
+    "pace_sensitivity": 0.7,
+    "recovery_boost": 0.1,
+    "favorite_shrink": 0.15,
+    "longshot_floor": 0.02,
+    "dnf_base_blend": 0.5
+  }
+}

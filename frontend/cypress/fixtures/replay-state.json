@@ -1,0 +1,10 @@
+{
+  "lap_number": 12,
+  "total_laps": 57,
+  "finished": false,
+  "standings": [
+    { "driver": "VER", "position": 1, "last_lap_s": 91.234, "compound": "MEDIUM" },
+    { "driver": "NOR", "position": 2, "last_lap_s": 91.876, "compound": "MEDIUM" },
+    { "driver": "LEC", "position": 3, "last_lap_s": 92.001, "compound": "HARD" }
+  ]
+}

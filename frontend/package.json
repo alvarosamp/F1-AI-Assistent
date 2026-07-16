@@ -18,10 +18,18 @@
     "tailwindcss": "^4.3.2"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.5.0",
     "@types/node": "^24.13.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.3",
+    "axe-core": "^4.12.1",
+    "cypress": "^15.18.1",
+    "cypress-axe": "^1.7.0",
+    "cypress-mochawesome-reporter": "^4.0.2",
+    "mochawesome": "^7.1.4",
+    "mochawesome-merge": "^5.1.1",
+    "mochawesome-report-generator": "^6.3.2",
     "oxlint": "^1.71.0",
     "typescript": "~6.0.2",
     "vite": "^8.1.1"

@@ -1,0 +1,23 @@
+{
+  "driver": "VER",
+  "lap_number": 12,
+  "lap_time_s": 91.234,
+  "compound": "MEDIUM",
+  "team": "Red Bull Racing",
+  "summary": {
+    "max_speed": 318.4,
+    "avg_speed": 201.7,
+    "dirty_air_pct": 4.2,
+    "full_throttle_pct": 62.5,
+    "brake_pct": 14.1,
+    "drs_pct": 18.9,
+    "cornering_intensity": 0.41,
+    "avg_distance_to_car_ahead": 850.2
+  },
+  "samples": [
+    { "Distance": 0, "Speed": 90, "Throttle": 40, "brake_pressure_proxy": 0, "RPM": 9000, "nGear": 3, "DRS": 0, "X": 0, "Y": 0, "DistanceToDriverAhead": 900, "dirty_air_score": 0.1, "steering_proxy": 0.1, "lateral_change": 0.0, "accel_proxy": 0.3 },
+    { "Distance": 100, "Speed": 180, "Throttle": 80, "brake_pressure_proxy": 0, "RPM": 11500, "nGear": 5, "DRS": 1, "X": 20, "Y": 5, "DistanceToDriverAhead": 870, "dirty_air_score": 0.2, "steering_proxy": 0.05, "lateral_change": 0.02, "accel_proxy": 0.6 },
+    { "Distance": 200, "Speed": 260, "Throttle": 100, "brake_pressure_proxy": 0, "RPM": 12500, "nGear": 7, "DRS": 1, "X": 40, "Y": 10, "DistanceToDriverAhead": 850, "dirty_air_score": 0.15, "steering_proxy": 0.0, "lateral_change": 0.0, "accel_proxy": 0.2 },
+    { "Distance": 300, "Speed": 310, "Throttle": 100, "brake_pressure_proxy": 0, "RPM": 12900, "nGear": 8, "DRS": 1, "X": 60, "Y": 15, "DistanceToDriverAhead": 800, "dirty_air_score": 0.1, "steering_proxy": 0.0, "lateral_change": 0.0, "accel_proxy": 0.05 }
+  ]
+}

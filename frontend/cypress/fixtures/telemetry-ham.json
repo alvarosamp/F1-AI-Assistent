@@ -1,0 +1,21 @@
+{
+  "driver": "HAM",
+  "lap_number": 5,
+  "lap_time_s": 90.512,
+  "compound": "SOFT",
+  "team": "Ferrari",
+  "summary": {
+    "max_speed": 312.1,
+    "avg_speed": 198.3,
+    "dirty_air_pct": 2.1,
+    "full_throttle_pct": 59.0,
+    "brake_pct": 15.6,
+    "drs_pct": 20.4,
+    "cornering_intensity": 0.38,
+    "avg_distance_to_car_ahead": 1200.5
+  },
+  "samples": [
+    { "Distance": 0, "Speed": 85, "Throttle": 35, "brake_pressure_proxy": 0, "RPM": 8800, "nGear": 3, "DRS": 0, "X": 0, "Y": 0, "DistanceToDriverAhead": 1250, "dirty_air_score": 0.05, "steering_proxy": 0.1, "lateral_change": 0.0, "accel_proxy": 0.3 },
+    { "Distance": 100, "Speed": 175, "Throttle": 78, "brake_pressure_proxy": 0, "RPM": 11300, "nGear": 5, "DRS": 1, "X": 22, "Y": 6, "DistanceToDriverAhead": 1220, "dirty_air_score": 0.05, "steering_proxy": 0.04, "lateral_change": 0.01, "accel_proxy": 0.55 }
+  ]
+}

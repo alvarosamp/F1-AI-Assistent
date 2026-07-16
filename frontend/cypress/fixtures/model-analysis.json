@@ -1,0 +1,20 @@
+{
+  "metrics": {
+    "rmse": 0.72,
+    "r2": 0.81,
+    "mae": 0.51,
+    "gain_vs_trivial_pct": 34.5
+  },
+  "feature_importance": [
+    { "feature": "grid_position", "importance": 0.184 },
+    { "feature": "team_pace_rolling", "importance": 0.132 },
+    { "feature": "driver_skill_encoded", "importance": 0.098 },
+    { "feature": "tyre_compound", "importance": 0.076 },
+    { "feature": "track_temp", "importance": 0.054 }
+  ],
+  "rmse_by_gp": [
+    { "gp": "Monaco Grand Prix", "rmse": 0.61, "mae": 0.44, "n": 20 },
+    { "gp": "Bahrain Grand Prix", "rmse": 0.68, "mae": 0.49, "n": 20 },
+    { "gp": "Italian Grand Prix", "rmse": 0.85, "mae": 0.6, "n": 20 }
+  ]
+}

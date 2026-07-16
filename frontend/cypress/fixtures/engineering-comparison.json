@@ -1,0 +1,44 @@
+{
+  "year": 2024,
+  "gp": "Bahrain Grand Prix",
+  "session": "Q",
+  "event_name": "Bahrain Grand Prix",
+  "driver_a": {
+    "driver": "VER",
+    "lap_number": 12,
+    "lap_time_s": 89.34,
+    "compound": "SOFT",
+    "team": "Red Bull Racing",
+    "summary": { "max_speed": 320.1, "avg_speed": 205.4, "dirty_air_pct": 1.8, "full_throttle_pct": 64.0, "brake_pct": 13.2, "drs_pct": 19.5, "cornering_intensity": 0.44, "avg_distance_to_car_ahead": 1400.0 },
+    "samples": [{ "Distance": 0, "Speed": 92 }, { "Distance": 120, "Speed": 190 }]
+  },
+  "driver_b": {
+    "driver": "LEC",
+    "lap_number": 14,
+    "lap_time_s": 89.58,
+    "compound": "SOFT",
+    "team": "Ferrari",
+    "summary": { "max_speed": 318.4, "avg_speed": 203.9, "dirty_air_pct": 2.1, "full_throttle_pct": 62.5, "brake_pct": 14.0, "drs_pct": 18.9, "cornering_intensity": 0.41, "avg_distance_to_car_ahead": 1350.0 },
+    "samples": [{ "Distance": 0, "Speed": 90 }, { "Distance": 120, "Speed": 186 }]
+  },
+  "summary_delta": { "max_speed": 1.7, "avg_speed": 1.5 },
+  "comparison_samples": [
+    { "Distance": 0, "speed_a": 92, "speed_b": 90, "speed_delta": 2, "time_delta": 0.0, "throttle_a": 42, "throttle_b": 40, "brake_a": 0, "brake_b": 0, "dirty_air_a": 0.05, "dirty_air_b": 0.06 },
+    { "Distance": 120, "speed_a": 190, "speed_b": 186, "speed_delta": 4, "time_delta": 0.05, "throttle_a": 85, "throttle_b": 82, "brake_a": 0, "brake_b": 0, "dirty_air_a": 0.04, "dirty_air_b": 0.05 }
+  ],
+  "analysis": {
+    "faster_driver": "VER",
+    "gap_s": 0.24,
+    "max_speed_delta": null,
+    "dirty_air_delta_pct": -0.3,
+    "brake_delta_pct": -0.8,
+    "full_throttle_delta_pct": 1.5,
+    "findings": ["VER mantem vantagem de velocidade na reta principal", "LEC sofre mais com ar sujo no ultimo setor"]
+  },
+  "copilot": {
+    "mode": "comparison",
+    "summary": "VER foi mais rapido por 0.24s, com vantagem consistente em velocidade de reta.",
+    "recommendation": "LEC pode buscar ganho ajustando ponto de frenagem na curva 4.",
+    "risk_flags": ["gap_pequeno"]
+  }
+}

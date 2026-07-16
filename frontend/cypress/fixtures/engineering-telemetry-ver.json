@@ -1,0 +1,21 @@
+{
+  "driver": "VER",
+  "lap_number": 12,
+  "lap_time_s": 89.34,
+  "compound": "SOFT",
+  "team": "Red Bull Racing",
+  "summary": {
+    "max_speed": 320.1,
+    "avg_speed": 205.4,
+    "dirty_air_pct": 1.8,
+    "full_throttle_pct": 64.0,
+    "brake_pct": 13.2,
+    "drs_pct": 19.5,
+    "cornering_intensity": 0.44,
+    "avg_distance_to_car_ahead": 1400.0
+  },
+  "samples": [
+    { "Distance": 0, "Speed": 92, "Throttle": 42, "brake_pressure_proxy": 0, "RPM": 9100, "nGear": 3, "DRS": 0, "X": 0, "Y": 0, "DistanceToDriverAhead": 1400, "dirty_air_score": 0.05, "steering_proxy": 0.1, "lateral_change": 0.0, "accel_proxy": 0.3 },
+    { "Distance": 120, "Speed": 190, "Throttle": 85, "brake_pressure_proxy": 0, "RPM": 11700, "nGear": 5, "DRS": 1, "X": 24, "Y": 6, "DistanceToDriverAhead": 1380, "dirty_air_score": 0.04, "steering_proxy": 0.03, "lateral_change": 0.01, "accel_proxy": 0.5 }
+  ]
+}

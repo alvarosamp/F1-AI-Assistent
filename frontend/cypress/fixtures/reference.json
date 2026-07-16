@@ -1,0 +1,30 @@
+{
+  "gps": ["Bahrain Grand Prix", "Saudi Arabian Grand Prix", "Australian Grand Prix"],
+  "gp_laps": {
+    "Bahrain Grand Prix": 57,
+    "Saudi Arabian Grand Prix": 50,
+    "Australian Grand Prix": 58
+  },
+  "drivers": {
+    "VER": "Red Bull Racing",
+    "SAI": "Williams",
+    "LEC": "Ferrari",
+    "NOR": "McLaren",
+    "PIA": "McLaren",
+    "RUS": "Mercedes",
+    "HAM": "Ferrari",
+    "ALO": "Aston Martin",
+    "STR": "Aston Martin",
+    "PER": "Red Bull Racing",
+    "BOT": "Sauber"
+  },
+  "team_colors": {
+    "Red Bull Racing": "#3671C6",
+    "Ferrari": "#E8002D",
+    "McLaren": "#FF8000",
+    "Mercedes": "#27F4D2",
+    "Aston Martin": "#229971",
+    "Williams": "#64C4FF",
+    "Sauber": "#52E252"
+  }
+}
