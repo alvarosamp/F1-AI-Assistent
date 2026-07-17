@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  # ---------------------------------------------------------------------
+  # 1) Build: garante que o frontend compila (type-check + vite build).
+  #    Roda antes do e2e pra falhar rápido se houver erro de TS/build.
+  # ---------------------------------------------------------------------
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Build (type-check + vite build)
+        working-directory: frontend
+        run: npm run build
+
+  # ---------------------------------------------------------------------
+  # 2) E2E: sobe o projeto todo via docker compose (igual ao ambiente
+  #    local em localhost:3000) e roda a suíte completa do Cypress.
+  #
+  #    IMPORTANTE: todos os specs em frontend/cypress/e2e/*.cy.ts usam
+  #    cy.intercept para mockar as respostas de /api/**. Isso significa
+  #    que o backend NÃO precisa ter dados reais (os que vêm do DVC em
+  #    ./data, ./models, ./mlruns) carregados pra esses testes passarem
+  #    — só é preciso que os dois containers subam e o frontend responda
+  #    em localhost:3000. Se no futuro algum teste passar a depender de
+  #    dados reais do backend, adicione aqui um passo de `dvc pull`
+  #    antes do `docker compose up`.
+  # ---------------------------------------------------------------------
+  e2e:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build and start containers (docker compose)
+        run: docker compose up -d --build
+
+      - name: Wait for frontend to respond em localhost:3000
+        run: |
+          timeout 90 bash -c 'until curl -sf http://localhost:3000 > /dev/null; do
+            echo "Aguardando frontend..."
+            sleep 3
+          done'
+
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v6
+        with:
+          working-directory: frontend
+          browser: chrome
+          config: baseUrl=http://localhost:3000
+
+      - name: Upload screenshots (em caso de falha)
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-screenshots
+          path: frontend/cypress/screenshots
+          if-no-files-found: ignore
+
+      - name: Upload videos
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-videos
+          path: frontend/cypress/videos
+          if-no-files-found: ignore
+
+      - name: Logs dos containers (em caso de falha)
+        if: failure()
+        run: docker compose logs
+
+      - name: Derrubar containers
+        if: always()
+        run: docker compose down -v
