@@ -1,0 +1,2 @@
+Comando pra rodar localmente (dentro de frontend/):
+npm install -D mochawesome mochawesome-merge mochawesome-report-generator rimraf

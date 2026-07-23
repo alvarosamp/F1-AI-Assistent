@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "cypress:run": "cypress run",
+    "report:clean": "rimraf cypress/reports",
+    "report:merge": "mochawesome-merge cypress/reports/mocha/*.json > cypress/reports/mochawesome.json",
+    "report:generate": "marge cypress/reports/mochawesome.json --reportDir cypress/reports --inline --charts -f report -t \"F1 AI - Relatório de Testes\"",
+    "test:e2e:report": "npm run report:clean && npm run cypress:run && npm run report:merge && npm run report:generate"
+  }
+}

@@ -63,11 +63,28 @@ jobs:
           done'
 
       - name: Run Cypress tests
+        id: cypress
+        continue-on-error: true
         uses: cypress-io/github-action@v6
         with:
           working-directory: frontend
           browser: chrome
           config: baseUrl=http://localhost:3000
+
+      - name: Merge relatórios e gerar HTML final
+        if: always()
+        working-directory: frontend
+        run: |
+          npm run report:merge
+          npm run report:generate
+
+      - name: Upload relatório HTML (mochawesome)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cypress-html-report
+          path: frontend/cypress/reports
+          if-no-files-found: ignore
 
       - name: Upload screenshots (em caso de falha)
         if: failure()
@@ -92,3 +109,7 @@ jobs:
       - name: Derrubar containers
         if: always()
         run: docker compose down -v
+
+      - name: Falhar o job se os testes Cypress falharam
+        if: steps.cypress.outcome == 'failure'
+        run: exit 1
